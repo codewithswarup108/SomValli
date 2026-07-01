@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1F1412;
+  /* Much darker richer black/brown for maximum contrast */
+  --color-secondary: #5C3A21;
+  /* Rich roasted coffee */
+  --color-accent: #E5A93C;
+  /* Brighter gold for better visibility */
+  --color-cream: #FDFBF7;
+  /* Very bright off-white for high contrast light mode */
+  --font-playfair: "Playfair Display", serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream text-primary font-poppins m-0 p-0 overflow-x-hidden;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-playfair;
+  }
+
+  button {
+    @apply font-montserrat;
+  }
+}
+
+/* Custom Utilities for SomValli Theme */
+@utility text-gradient-gold {
+  background: linear-gradient(135deg, #FFDF73, var(--color-accent), #B37B22);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@utility text-gradient-dark {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@utility bg-gradient-btn {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+  color: #fff;
+  border: 1px solid var(--color-accent);
+}
+
+@utility shiny-gold-nav {
+  background: linear-gradient(135deg, rgba(229, 169, 60, 0.85) 0%, rgba(201, 147, 59, 0.95) 50%, rgba(179, 123, 34, 0.9) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 2px solid rgba(255, 223, 115, 0.8);
+  box-shadow: 0 10px 30px rgba(229, 169, 60, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+@utility glassmorphism {
+  background: rgba(31, 20, 18, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(229, 169, 60, 0.2);
+}
+
+@utility glassmorphism-light {
+  background: rgba(253, 251, 247, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+@utility smooth-transition {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@utility product-card-hover {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: transparent !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 0 2px #fbad1c, 0 0 15px rgba(229, 169, 60, 0.6);
+}
