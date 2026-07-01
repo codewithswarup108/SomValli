@@ -34,9 +34,10 @@ const Footer: React.FC = () => {
     e.preventDefault();
     if (email) {
       try {
-        const response = await fetch('http://localhost:5000/api/auth/check-email', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/check-email`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify({ email })
         });
         const data = await response.json();

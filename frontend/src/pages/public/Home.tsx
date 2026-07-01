@@ -10,12 +10,12 @@ const Home = () => {
   const [feedbacks, setFeedbacks] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetch(`${import.meta.env.VITE_API_URL}/api/products`, { credentials: 'include' })
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error(err));
 
-    fetch('http://localhost:5000/api/feedbacks')
+    fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks`, { credentials: 'include' })
       .then(res => res.json())
       .then(data => setFeedbacks(data))
       .catch(err => console.error(err));
@@ -30,9 +30,10 @@ const Home = () => {
     const text = (form.elements[2] as HTMLTextAreaElement).value;
 
     try {
-      const response = await fetch('http://localhost:5000/api/feedbacks', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ name, rating, text })
       });
       const newFeedback = await response.json();
