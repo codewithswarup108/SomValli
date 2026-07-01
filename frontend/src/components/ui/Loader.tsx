@@ -24,7 +24,7 @@ const Loader: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
   
   const letterVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 12, stiffness: 200 } }
+    visible: { opacity: 1, y: 0, transition: { type: "spring" as const, damping: 12, stiffness: 200 } }
   };
 
   return (
