@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useAuth } from '../../context/AuthContext';
 
 const Register = () => {
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -46,8 +48,7 @@ const Register = () => {
 
       if (response.ok) {
         toast.success(`Account created successfully! Welcome ${data.name}!`, { icon: '🎉' });
-        localStorage.setItem('somvalli_token', data.token);
-        localStorage.setItem('somvalli_user', JSON.stringify(data));
+        login(data, data.token);
         navigate('/');
       } else {
         toast.error(data.message || 'Registration failed!');

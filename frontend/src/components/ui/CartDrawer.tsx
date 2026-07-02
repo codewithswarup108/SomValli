@@ -2,15 +2,38 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag } from 'react-icons/fi';
 import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const CartDrawer: React.FC = () => {
   const { isCartOpen, setIsCartOpen, cartItems, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const { user, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const [showCheckout, setShowCheckout] = useState(false);
 
   const handleCheckout = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success('Offline order placed successfully! We will contact you soon.', { duration: 4000, icon: '🎉' });
+    const form = e.target as HTMLFormElement;
+    const name = (form.elements.namedItem('customerName') as HTMLInputElement).value;
+    const phone = (form.elements.namedItem('customerPhone') as HTMLInputElement).value;
+    const address = (form.elements.namedItem('customerAddress') as HTMLTextAreaElement).value;
+
+    let message = `*New Order Request*\n\n`;
+    message += `*Name:* ${name}\n`;
+    message += `*Email:* ${user?.email || 'N/A'}\n`;
+    message += `*Phone:* ${phone}\n`;
+    message += `*Address:* ${address}\n\n`;
+    message += `*Order Items:*\n`;
+    cartItems.forEach((item, index) => {
+      message += `${index + 1}. ${item.name} (x${item.qty}) - ₹${(item.price * item.qty).toFixed(2)}\n`;
+    });
+    message += `\n*Total Cost:* ₹${cartTotal.toFixed(2)}`;
+
+    const whatsappUrl = `https://wa.me/917972666458?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+
+    toast.success('Redirecting to WhatsApp to complete your order!', { duration: 4000, icon: '📱' });
     setTimeout(() => {
       setShowCheckout(false);
       setIsCartOpen(false);
@@ -88,15 +111,15 @@ const CartDrawer: React.FC = () => {
                   <form id="checkoutForm" onSubmit={handleCheckout} className="space-y-4">
                     <div>
                       <label className="block text-sm font-bold text-primary mb-1">Full Name</label>
-                      <input required type="text" className="w-full border-2 border-gray-200 p-3 rounded-lg focus:outline-none focus:border-accent" placeholder="Swarup Holkar" />
+                      <input name="customerName" required type="text" defaultValue={user?.name || ''} className="w-full border-2 border-gray-200 p-3 rounded-lg focus:outline-none focus:border-accent" placeholder="Swarup Holkar" />
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-primary mb-1">Payment Reference (Phone)</label>
-                      <input required type="tel" defaultValue="9876543210" className="w-full border-2 border-gray-200 p-3 rounded-lg focus:outline-none focus:border-accent font-mono text-lg" />
+                      <input name="customerPhone" required type="tel" defaultValue={user?.phone || ''} className="w-full border-2 border-gray-200 p-3 rounded-lg focus:outline-none focus:border-accent font-mono text-lg" />
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-primary mb-1">Delivery Address</label>
-                      <textarea required className="w-full border-2 border-gray-200 p-3 rounded-lg focus:outline-none focus:border-accent h-24" placeholder="123 Luxury Ave..."></textarea>
+                      <textarea name="customerAddress" required className="w-full border-2 border-gray-200 p-3 rounded-lg focus:outline-none focus:border-accent h-24" placeholder="123 Luxury Ave..."></textarea>
                     </div>
                     <div className="bg-primary/5 p-4 rounded-lg mt-4 text-sm text-gray-600">
                       <strong>Note:</strong> Since online payment is currently future scope, we will reference your mobile number for offline payment verification globally.
@@ -114,16 +137,22 @@ const CartDrawer: React.FC = () => {
                   <span>₹{cartTotal.toFixed(2)}</span>
                 </div>
                 {!showCheckout ? (
-                  <button onClick={() => setShowCheckout(true)} className="w-full bg-gradient-btn text-white py-4 rounded-xl font-bold tracking-widest uppercase hover:scale-105 transition-transform duration-200 shadow-[0_5px_15px_rgba(229,169,60,0.4)]">
-                    Proceed to Checkout
-                  </button>
+                  isAuthenticated ? (
+                    <button onClick={() => setShowCheckout(true)} className="w-full bg-gradient-btn text-white py-4 rounded-xl font-bold tracking-widest uppercase hover:scale-105 transition-transform duration-200 shadow-[0_5px_15px_rgba(229,169,60,0.4)]">
+                      Proceed to Checkout
+                    </button>
+                  ) : (
+                    <button onClick={() => { setIsCartOpen(false); navigate('/login'); }} className="w-full bg-gradient-btn text-white py-4 rounded-xl font-bold tracking-widest uppercase hover:scale-105 transition-transform duration-200 shadow-[0_5px_15px_rgba(229,169,60,0.4)]">
+                      Login to Order
+                    </button>
+                  )
                 ) : (
                   <div className="flex gap-4">
                      <button type="button" onClick={() => setShowCheckout(false)} className="w-1/3 bg-gray-200 text-primary py-4 rounded-xl font-bold tracking-widest uppercase hover:bg-gray-300 transition-colors">
                       Back
                     </button>
-                    <button type="submit" form="checkoutForm" className="w-2/3 bg-gradient-btn text-white py-4 rounded-xl font-bold tracking-widest uppercase hover:scale-105 transition-transform duration-200 shadow-[0_5px_15px_rgba(229,169,60,0.4)]">
-                      Place Order
+                    <button type="submit" form="checkoutForm" className="w-2/3 bg-green-500 text-white py-4 rounded-xl font-bold tracking-widest uppercase hover:scale-105 transition-transform duration-200 shadow-[0_5px_15px_rgba(34,197,94,0.4)] flex items-center justify-center gap-2">
+                      Order via WhatsApp
                     </button>
                   </div>
                 )}

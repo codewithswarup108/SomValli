@@ -11,8 +11,8 @@ const getFeedbacks = async (req, res) => {
 
 const createFeedback = async (req, res) => {
   try {
-    const { name, rating, text } = req.body;
-    const feedback = new Feedback({ name, rating, text });
+    const { name, email, rating, text, image } = req.body;
+    const feedback = new Feedback({ name, email, rating, text, image });
     const createdFeedback = await feedback.save();
     res.status(201).json(createdFeedback);
   } catch (error) {

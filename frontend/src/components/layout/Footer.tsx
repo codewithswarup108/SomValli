@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiInstagram, FiFacebook, FiTwitter, FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Footer: React.FC = () => {
@@ -79,6 +80,9 @@ const Footer: React.FC = () => {
                 </a>
                 <a href="#" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent hover:scale-110 smooth-transition text-white">
                   <FiTwitter size={20} />
+                </a>
+                <a href="https://wa.me/917972666458" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-green-500 hover:scale-110 smooth-transition text-white">
+                  <FaWhatsapp size={20} />
                 </a>
               </div>
             </div>

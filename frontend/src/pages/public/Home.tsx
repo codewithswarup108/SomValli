@@ -1,13 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../context/CartContext';
+import { useWishlist } from '../../context/WishlistContext';
+import { useAuth } from '../../context/AuthContext';
+import { FiHeart, FiCamera, FiImage } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { user, isAuthenticated } = useAuth();
   const [showLocation, setShowLocation] = useState(false);
   const [products, setProducts] = useState([]);
   const [feedbacks, setFeedbacks] = useState<any[]>([]);
+  const [feedbackImage, setFeedbackImage] = useState<string | null>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) { // 2MB limit
+        toast.error('Image size should be less than 2MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFeedbackImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/products`, { credentials: 'include' })
@@ -23,23 +45,25 @@ const Home = () => {
 
   const handleFeedbackSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isAuthenticated || !user) return;
+
     const form = e.target as HTMLFormElement;
-    const name = (form.elements[0] as HTMLInputElement).value;
-    const ratingStr = (form.elements[1] as HTMLSelectElement).value;
+    const ratingStr = (form.elements.namedItem('rating') as HTMLSelectElement).value;
     const rating = parseInt(ratingStr.split(' ')[0]);
-    const text = (form.elements[2] as HTMLTextAreaElement).value;
+    const text = (form.elements.namedItem('experience') as HTMLTextAreaElement).value;
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ name, rating, text })
+        body: JSON.stringify({ name: user.name, email: user.email, rating, text, image: feedbackImage })
       });
       const newFeedback = await response.json();
       setFeedbacks([newFeedback, ...feedbacks]);
       toast.success('Thank you for your valuable feedback!');
       form.reset();
+      setFeedbackImage(null);
     } catch (err) {
       console.error(err);
     }
@@ -129,6 +153,27 @@ const Home = () => {
               >
                 <div className="h-64 bg-gold-200 relative">
                   <img src={item.image} className="w-full h-full object-cover smooth-transition" alt={item.name} />
+                  
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (isInWishlist(item._id || item.id)) {
+                        removeFromWishlist(item._id || item.id);
+                        toast.success(`${item.name} removed from wishlist`);
+                      } else {
+                        addToWishlist(item);
+                        toast.success(`${item.name} added to wishlist!`);
+                      }
+                    }}
+                    className={`absolute top-4 left-4 p-2 rounded-full shadow-lg transition-all ${
+                      isInWishlist(item._id || item.id) 
+                        ? 'bg-red-50 text-red-500 scale-110' 
+                        : 'bg-white/80 text-gray-400 hover:text-red-500 hover:scale-110'
+                    }`}
+                  >
+                    <FiHeart size={20} className={isInWishlist(item._id || item.id) ? 'fill-current' : ''} />
+                  </button>
+
                   <div className="absolute top-4 right-4 bg-primary text-accent font-black px-5 py-2 rounded-full shadow-lg">
                     ₹{item.price}
                   </div>
@@ -226,42 +271,92 @@ const Home = () => {
           >
             {feedbacks.map((review: any, idx: number) => (
               <motion.div key={idx} className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex flex-col min-w-[300px] max-w-[350px] snap-start shrink-0">
+                <div className="flex items-center gap-3 mb-4 border-b border-gray-100 pb-4">
+                  <div className="w-10 h-10 bg-gradient-btn rounded-full flex items-center justify-center text-white font-bold text-lg uppercase flex-shrink-0">
+                    {review.name.charAt(0)}
+                  </div>
+                  <div className="overflow-hidden">
+                    <p className="font-bold font-poppins text-primary truncate">{review.name}</p>
+                    <p className="text-xs text-gray-500 font-poppins truncate">{review.email}</p>
+                  </div>
+                </div>
                 <div className="flex text-accent mb-4">
                   {[...Array(5)].map((_, i) => (
                     <span key={i} className={i < review.rating ? 'text-accent' : 'text-gray-300 text-lg'}>★</span>
                   ))}
                 </div>
-                <p className="font-poppins text-gray-700 italic flex-grow text-sm">"{review.text}"</p>
-                <p className="font-bold font-playfair text-primary mt-4 text-right">- {review.name}</p>
+                <p className="font-poppins text-gray-700 flex-grow text-sm mb-4">"{review.text}"</p>
+                {review.image && (
+                  <img src={review.image} alt="User feedback" className="w-full h-32 object-cover rounded-xl mt-auto shadow-sm" />
+                )}
               </motion.div>
             ))}
           </div>
 
           <div className="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-2xl border border-accent/20">
             <h3 className="text-2xl font-playfair font-bold text-center mb-6 text-primary">Leave Your Feedback</h3>
-            <form onSubmit={handleFeedbackSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-bold text-primary mb-1">Your Name</label>
-                <input required type="text" className="w-full border p-3 rounded-xl bg-gray-50 focus:outline-none focus:border-accent shadow-sm" placeholder="e.g. Aditi Rao" />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-primary mb-1">Rating (1-5)</label>
-                <select className="w-full border p-3 rounded-xl bg-gray-50 focus:outline-none focus:border-accent shadow-sm">
-                  <option>5 - Excellent</option>
-                  <option>4 - Very Good</option>
-                  <option>3 - Good</option>
-                  <option>2 - Fair</option>
-                  <option>1 - Poor</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-primary mb-1">Your Experience</label>
-                <textarea required className="w-full border p-3 rounded-xl bg-gray-50 focus:outline-none focus:border-accent shadow-sm" rows={3} placeholder="Tell us what you loved..."></textarea>
-              </div>
-              <button type="submit" className="w-full bg-gradient-btn text-white py-4 mt-4 rounded-xl font-bold tracking-widest uppercase hover:opacity-90 transition-opacity">
-                Submit Feedback
-              </button>
-            </form>
+            
+            {!isAuthenticated ? (
+               <div className="text-center py-8">
+                 <p className="font-poppins text-gray-600 mb-6">Please log in to leave an authentic review and share photos.</p>
+                 <Link to="/login" className="bg-gradient-btn text-white px-8 py-3 rounded-xl font-bold tracking-widest uppercase hover:scale-105 transition-transform duration-200 inline-block">
+                   Log In to Review
+                 </Link>
+               </div>
+            ) : (
+              <form onSubmit={handleFeedbackSubmit} className="space-y-4 relative">
+                <div className="flex justify-between items-center bg-gray-50 p-4 rounded-xl border border-gray-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold uppercase">
+                      {user?.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-primary">{user?.name}</p>
+                      <p className="text-xs text-gray-500">{user?.email}</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-green-600 font-bold bg-green-100 px-2 py-1 rounded-full flex items-center gap-1">
+                    ✓ Verified
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-primary mb-1">Rating (1-5)</label>
+                  <select name="rating" className="w-full border p-3 rounded-xl bg-gray-50 focus:outline-none focus:border-accent shadow-sm">
+                    <option>5 - Excellent</option>
+                    <option>4 - Very Good</option>
+                    <option>3 - Good</option>
+                    <option>2 - Fair</option>
+                    <option>1 - Poor</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-primary mb-1">Your Experience</label>
+                  <textarea name="experience" required className="w-full border p-3 rounded-xl bg-gray-50 focus:outline-none focus:border-accent shadow-sm" rows={3} placeholder="Tell us what you loved..."></textarea>
+                </div>
+                
+                {/* Image Upload Area */}
+                <div>
+                  <label className="block text-sm font-bold text-primary mb-2">Attach Photo (Optional)</label>
+                  <div className="flex items-center gap-4">
+                    <label className="cursor-pointer bg-primary text-cream px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-opacity-90 transition-all font-poppins text-sm font-bold">
+                      <FiCamera size={18} /> Choose Photo
+                      <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                    </label>
+                    {feedbackImage && (
+                      <div className="relative group">
+                        <img src={feedbackImage} alt="Preview" className="w-12 h-12 rounded-lg object-cover border-2 border-accent" />
+                        <button type="button" onClick={() => setFeedbackImage(null)} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-lg hover:scale-110">×</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <button type="submit" className="w-full bg-gradient-btn text-white py-4 mt-4 rounded-xl font-bold tracking-widest uppercase hover:opacity-90 transition-opacity">
+                  Submit Authentic Review
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>

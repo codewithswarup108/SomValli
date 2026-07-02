@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -27,9 +29,7 @@ const Login = () => {
 
       if (response.ok) {
         toast.success(`Welcome back, ${data.name}!`, { icon: '☕' });
-        // Save token to local storage and user info
-        localStorage.setItem('somvalli_token', data.token);
-        localStorage.setItem('somvalli_user', JSON.stringify(data));
+        login(data, data.token);
         navigate('/');
       } else {
         toast.error(data.message || 'Login failed!');

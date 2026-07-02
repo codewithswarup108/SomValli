@@ -8,6 +8,9 @@ import CartDrawer from './components/ui/CartDrawer'
 import Home from './pages/public/Home'
 import Login from './pages/public/Login'
 import Register from './pages/public/Register'
+import Wishlist from './pages/public/Wishlist'
+import { WishlistProvider } from './context/WishlistContext'
+import { AuthProvider } from './context/AuthContext'
 
 function ScrollToAnchor() {
   const { hash } = useLocation();
@@ -30,8 +33,9 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   return (
-    <>
-      <Loader onComplete={() => setLoading(false)} />
+    <AuthProvider>
+      <WishlistProvider>
+        <Loader onComplete={() => setLoading(false)} />
       
       {!loading && (
         <div className="flex flex-col min-h-screen">
@@ -42,6 +46,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/wishlist" element={<Wishlist />} />
               {/* Other isolated pages like cart/profile will go here */}
             </Routes>
           </main>
@@ -61,7 +66,8 @@ function App() {
           <CartDrawer />
         </div>
       )}
-    </>
+      </WishlistProvider>
+    </AuthProvider>
   )
 }
 

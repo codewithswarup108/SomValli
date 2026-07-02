@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiShoppingBag, FiUser, FiMenu, FiX, FiHeart } from 'react-icons/fi';
+import { FiShoppingBag, FiUser, FiMenu, FiX, FiHeart, FiLogOut } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../context/CartContext';
+import { useWishlist } from '../../context/WishlistContext';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
   const { cartItems, setIsCartOpen } = useCart();
+  const { wishlistItems } = useWishlist();
+  const { user, isAuthenticated, logout } = useAuth();
   const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  const wishlistCount = wishlistItems.length;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,8 +60,13 @@ const Navbar: React.FC = () => {
         </nav>
 
         <div className={`hidden md:flex items-center gap-6 ${textColor}`}>
-          <Link to="/wishlist" className="hover:-translate-y-1 hover:scale-110 transition-transform duration-200">
+          <Link to="/wishlist" className="hover:-translate-y-1 hover:scale-110 relative transition-transform duration-200">
             <FiHeart size={24} strokeWidth={2.5} />
+            {wishlistCount > 0 && (
+              <span className={`absolute -top-2 -right-2 ${isScrolled ? 'bg-primary text-accent' : 'bg-accent text-primary'} font-bold text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg border border-white/20`}>
+                {wishlistCount}
+              </span>
+            )}
           </Link>
           <button onClick={() => setIsCartOpen(true)} className="hover:-translate-y-1 hover:scale-110 relative transition-transform duration-200 cursor-pointer">
             <FiShoppingBag size={24} strokeWidth={2.5} />
@@ -65,9 +76,47 @@ const Navbar: React.FC = () => {
               </span>
             )}
           </button>
-          <Link to="/register" className="hover:-translate-y-1 hover:scale-110 transition-transform duration-200">
-            <FiUser size={24} strokeWidth={2.5} />
-          </Link>
+          
+          {isAuthenticated && user ? (
+            <div className="relative">
+              <button 
+                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                className="w-10 h-10 rounded-full bg-green-500 text-white font-bold text-lg flex items-center justify-center uppercase hover:scale-110 transition-transform shadow-lg border-2 border-white/20"
+                title={user.email}
+              >
+                {user.name.charAt(0)}
+              </button>
+              
+              <AnimatePresence>
+                {isProfileDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-12 right-0 bg-white text-primary rounded-xl shadow-2xl py-3 px-4 min-w-[200px] border border-gray-100 z-50"
+                  >
+                    <div className="border-b border-gray-100 pb-2 mb-2">
+                      <p className="font-bold text-sm truncate">{user.name}</p>
+                      <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                    </div>
+                    <button 
+                      onClick={() => {
+                        logout();
+                        setIsProfileDropdownOpen(false);
+                      }}
+                      className="w-full text-left flex items-center gap-2 text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors font-bold text-sm"
+                    >
+                      <FiLogOut size={16} /> Sign Out
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ) : (
+            <Link to="/register" className="hover:-translate-y-1 hover:scale-110 transition-transform duration-200">
+              <FiUser size={24} strokeWidth={2.5} />
+            </Link>
+          )}
         </div>
 
         <button
