@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ CORS Configuration (FIXED)
+// CORS Configuration
 const allowedOrigins = [
   'http://localhost:5173',
   process.env.FRONTEND_URL
@@ -19,17 +19,19 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow server-to-server or Postman requests
-      if (!origin) return callback(null, true);
+      // Allow requests with no origin (Postman, mobile apps, server-to-server)
+      if (!origin) {
+        return callback(null, true);
+      }
 
       const cleanOrigin = origin.replace(/\/$/, '');
 
       if (allowedOrigins.includes(cleanOrigin)) {
-        callback(null, true);
-      } else {
-        console.log("❌ Blocked by CORS:", cleanOrigin);
-        callback(new Error("Not allowed by CORS"));
+        return callback(null, true);
       }
+
+      console.log(`Blocked by CORS: ${cleanOrigin}`);
+      return callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
   })
@@ -49,10 +51,14 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/feedbacks', require('./routes/feedbackRoutes'));
 
-// Error handling middleware (optional)
+// Global Error Handler
 app.use((err, req, res, next) => {
-  console.error(err.message);
-  res.status(500).json({ message: 'Server error' });
+  console.error(err.stack);
+
+  res.status(500).json({
+    success: false,
+    message: err.message || 'Internal Server Error',
+  });
 });
 
 module.exports = app;
