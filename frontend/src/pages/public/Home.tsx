@@ -15,7 +15,7 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [feedbacks, setFeedbacks] = useState<any[]>([]);
   const [feedbackImage, setFeedbackImage] = useState<string | null>(null);
-
+  console.log("API URL:", import.meta.env.VITE_API_URL);
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -153,7 +153,7 @@ const Home = () => {
               >
                 <div className="h-64 bg-gold-200 relative">
                   <img src={item.image} className="w-full h-full object-cover smooth-transition" alt={item.name} />
-                  
+
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -165,11 +165,10 @@ const Home = () => {
                         toast.success(`${item.name} added to wishlist!`);
                       }
                     }}
-                    className={`absolute top-4 left-4 p-2 rounded-full shadow-lg transition-all ${
-                      isInWishlist(item._id || item.id) 
-                        ? 'bg-red-50 text-red-500 scale-110' 
-                        : 'bg-white/80 text-gray-400 hover:text-red-500 hover:scale-110'
-                    }`}
+                    className={`absolute top-4 left-4 p-2 rounded-full shadow-lg transition-all ${isInWishlist(item._id || item.id)
+                      ? 'bg-red-50 text-red-500 scale-110'
+                      : 'bg-white/80 text-gray-400 hover:text-red-500 hover:scale-110'
+                      }`}
                   >
                     <FiHeart size={20} className={isInWishlist(item._id || item.id) ? 'fill-current' : ''} />
                   </button>
@@ -286,8 +285,13 @@ const Home = () => {
                   ))}
                 </div>
                 <p className="font-poppins text-gray-700 flex-grow text-sm mb-4">"{review.text}"</p>
-                {review.image && (
+                {review.image ? (
                   <img src={review.image} alt="User feedback" className="w-full h-32 object-cover rounded-xl mt-auto shadow-sm" />
+                ) : (
+                  <div className="w-full h-32 bg-gray-50 border border-dashed border-gray-200 rounded-xl mt-auto shadow-sm flex flex-col items-center justify-center text-gray-400">
+                    <FiImage size={24} className="mb-2 opacity-50" />
+                    <span className="text-xs font-poppins font-medium">No Image</span>
+                  </div>
                 )}
               </motion.div>
             ))}
@@ -295,14 +299,14 @@ const Home = () => {
 
           <div className="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-2xl border border-accent/20">
             <h3 className="text-2xl font-playfair font-bold text-center mb-6 text-primary">Leave Your Feedback</h3>
-            
+
             {!isAuthenticated ? (
-               <div className="text-center py-8">
-                 <p className="font-poppins text-gray-600 mb-6">Please log in to leave an authentic review and share photos.</p>
-                 <Link to="/login" className="bg-gradient-btn text-white px-8 py-3 rounded-xl font-bold tracking-widest uppercase hover:scale-105 transition-transform duration-200 inline-block">
-                   Log In to Review
-                 </Link>
-               </div>
+              <div className="text-center py-8">
+                <p className="font-poppins text-gray-600 mb-6">Please log in to leave an authentic review and share photos.</p>
+                <Link to="/login" className="bg-gradient-btn text-white px-8 py-3 rounded-xl font-bold tracking-widest uppercase hover:scale-105 transition-transform duration-200 inline-block">
+                  Log In to Review
+                </Link>
+              </div>
             ) : (
               <form onSubmit={handleFeedbackSubmit} className="space-y-4 relative">
                 <div className="flex justify-between items-center bg-gray-50 p-4 rounded-xl border border-gray-200">
@@ -334,7 +338,7 @@ const Home = () => {
                   <label className="block text-sm font-bold text-primary mb-1">Your Experience</label>
                   <textarea name="experience" required className="w-full border p-3 rounded-xl bg-gray-50 focus:outline-none focus:border-accent shadow-sm" rows={3} placeholder="Tell us what you loved..."></textarea>
                 </div>
-                
+
                 {/* Image Upload Area */}
                 <div>
                   <label className="block text-sm font-bold text-primary mb-2">Attach Photo (Optional)</label>

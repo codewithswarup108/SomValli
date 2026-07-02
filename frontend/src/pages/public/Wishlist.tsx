@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import { FiTrash2, FiShoppingBag, FiHeart } from 'react-icons/fi';
 import { useWishlist } from '../../context/WishlistContext';
