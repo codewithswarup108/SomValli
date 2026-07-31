@@ -5,10 +5,10 @@ const Feedback = require('./models/feedbackModel');
 dotenv.config();
 
 const sampleFeedbacks = [
-  { name: "Rahul Deshmukh", text: "The aroma of the filter coffee is just like my grandmother used to make! Absolutely authentic and fresh.", rating: 5 },
-  { name: "Priya Sharma", text: "I've tried many luxury coffees in India, but SomValli's Masala Roast is incredibly unique and refreshing.", rating: 5 },
-  { name: "Arun Iyer", text: "As a coffee connoisseur from Coorg, I can vouch for the Arabica Select. It has fantastic body and a smooth finish.", rating: 4 },
-  { name: "Sneha Patil", text: "Brilliant packaging and lovely taste. The Malabar Monsoon blend is my new morning favorite!", rating: 5 }
+  { name: "Rahul Deshmukh", email: "rahul.deshmukh@gmail.com", phone: "9820145210", text: "The authentic SomValli Premium Masala Tea is just incredible! Uncompromising quality and taste.", rating: 5 },
+  { name: "Priya Sharma", email: "priya.sharma@gmail.com", phone: "9819230411", text: "I've tried many gourmet snacks in India, but SomValli's Dry Fruit Laddoos and Masala Tea are exceptionally fresh and delicious.", rating: 5 },
+  { name: "Arun Iyer", email: "arun.iyer@gmail.com", phone: "9769123840", text: "As a tea connoisseur, I can vouch for SomValli Masala Tea. Rich aroma, fantastic flavor, and pure ingredients.", rating: 4 },
+  { name: "Sneha Patil", email: "sneha.patil@gmail.com", phone: "9833019284", text: "Brilliant packaging and lovely taste. The SomValli Chocolate Biscuits are my family's new favorite!", rating: 5 }
 ];
 
 const seedDB = async () => {

@@ -67,19 +67,28 @@ const Footer: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             {/* Brand */}
             <div className="space-y-4">
-              <h2 className="text-4xl font-playfair font-bold text-accent">SomValli</h2>
-              <p className="text-gray-400 font-poppins text-sm leading-relaxed">
-                Every Sip Tells a Story. Experience the finest selection of premium coffee beans roasted with passion.
+              <h2 className="text-4xl font-playfair font-bold text-accent">SOMVALLI FOODS</h2>
+              <p className="text-accent font-bold font-poppins text-xs uppercase tracking-wider">
+                Premium Taste • Pure Quality • Unforgettable Moments
               </p>
-              <div className="flex gap-4 pt-4">
-                <a href="#" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent hover:scale-110 smooth-transition text-white">
+              <p className="text-gray-400 font-poppins text-sm leading-relaxed italic">
+                "Quality You Can Taste, Trust You Can Feel."
+              </p>
+              
+              {/* FSSAI Badge */}
+              <div className="bg-[#1F1412] p-3 rounded-xl border border-accent/40 inline-flex items-center gap-3">
+                <div className="bg-amber-400/20 text-accent font-black text-xs px-2 py-1 rounded">
+                  FSSAI
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase font-bold">FSSAI License No.</p>
+                  <p className="text-xs font-mono font-bold text-accent">21524197000910</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 pt-2">
+                <a href="https://instagram.com/somvallifoods" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent hover:scale-110 smooth-transition text-white">
                   <FiInstagram size={20} />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent hover:scale-110 smooth-transition text-white">
-                  <FiFacebook size={20} />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent hover:scale-110 smooth-transition text-white">
-                  <FiTwitter size={20} />
                 </a>
                 <a href="https://wa.me/917972666458" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-green-500 hover:scale-110 smooth-transition text-white">
                   <FaWhatsapp size={20} />
@@ -91,20 +100,19 @@ const Footer: React.FC = () => {
             <div className="space-y-4">
               <h3 className="text-xl font-bold font-playfair text-white">Quick Links</h3>
               <ul className="space-y-3 font-poppins text-sm">
-                <li><a href="/#about" className="text-gray-400 hover:text-accent smooth-transition">About Us</a></li>
-                <li><a href="/#menu" className="text-gray-400 hover:text-accent smooth-transition">Our Menu</a></li>
-                <li><Link to="/blogs" className="text-gray-400 hover:text-accent smooth-transition">Coffee Blog</Link></li>
+                <li><a href="/#about" className="text-gray-400 hover:text-accent smooth-transition">About SomValli</a></li>
+                <li><a href="/#menu" className="text-gray-400 hover:text-accent smooth-transition">Product Catalog</a></li>
                 <li><a href="/#contact" className="text-gray-400 hover:text-accent smooth-transition">Contact Us</a></li>
               </ul>
             </div>
 
             {/* Contact Info */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold font-playfair text-white">Contact Info</h3>
+              <h3 className="text-xl font-bold font-playfair text-white">Official Contact Info</h3>
               <ul className="space-y-4 font-poppins text-sm">
                 <li className="flex items-start gap-3 text-gray-400">
                   <FiMapPin className="text-accent mt-1 flex-shrink-0" size={20} />
-                  <span>123 Luxury Avenue, Coffee District, Brew City 45678</span>
+                  <span>Somvalli Foods, Shop No. 4, Shantipoli, Tehsil: Shahapur, Pin Code: 421601, District: Thane, Maharashtra.</span>
                 </li>
                 <li className="flex items-center gap-3 text-gray-400">
                   <FiPhone className="text-accent flex-shrink-0" size={20} />
@@ -112,21 +120,21 @@ const Footer: React.FC = () => {
                 </li>
                 <li className="flex items-center gap-3 text-gray-400">
                   <FiMail className="text-accent flex-shrink-0" size={20} />
-                  <a href="mailto:swarupholkar4@gmail.com" className="hover:text-accent smooth-transition">swarupholkar4@gmail.com</a>
+                  <a href="mailto:somvallifoods@gmail.com" className="hover:text-accent smooth-transition">somvallifoods@gmail.com</a>
                 </li>
               </ul>
             </div>
 
             {/* Newsletter */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold font-playfair text-white">Newsletter</h3>
-              <p className="text-gray-400 font-poppins text-sm">Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>
+              <h3 className="text-xl font-bold font-playfair text-white">Stay Updated</h3>
+              <p className="text-gray-400 font-poppins text-sm">Subscribe to receive fresh product arrivals, festival deals, and bulk order offers.</p>
               <form onSubmit={handleRegister} className="flex flex-col gap-3">
                 <input 
                   type="email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your mail id" 
+                  placeholder="Enter your email address" 
                   required
                   className="bg-secondary/20 border border-gray-700 rounded-lg px-4 py-3 text-white font-poppins text-sm placeholder-gray-500 focus:outline-none focus:border-accent"
                 />
@@ -140,7 +148,7 @@ const Footer: React.FC = () => {
           {/* Bottom Bar */}
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-500 font-poppins text-sm">
-              &copy; {new Date().getFullYear()} SomValli Coffee. All rights reserved.
+              &copy; {new Date().getFullYear()} SOMVALLI FOODS. All rights reserved. FSSAI Lic No: 21524197000910
             </p>
             <div className="flex gap-6 text-sm font-poppins text-gray-500">
               <Link to="/privacy" className="hover:text-accent transition-colors">Privacy Policy</Link>

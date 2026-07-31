@@ -23,10 +23,13 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const addToWishlist = (item: WishlistItem) => {
     setWishlistItems((prev) => {
-      if (!prev.find((i) => i._id === item._id || i.id === item.id)) {
-        return [...prev, item];
+      const exists = prev.some((i) => i._id === item._id || i.id === item.id);
+      if (exists) {
+        return prev.map((i) =>
+          i._id === item._id || i.id === item.id ? { ...i, ...item } : i
+        );
       }
-      return prev;
+      return [...prev, item];
     });
   };
 

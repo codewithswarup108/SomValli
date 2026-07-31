@@ -20,7 +20,7 @@ const createAdmin = async () => {
         name: 'Admin',
         email: 'admin@somvalli.com',
         password: 'adminpassword123',
-        phone: '1234567890',
+        phone: '+917972666458',
         role: 'admin'
       });
       console.log('New Admin User Created!');

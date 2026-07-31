@@ -7,12 +7,17 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 // Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ✅ CORS Configuration (FIXED)
 const allowedOrigins = [
   'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:5174',
+  'http://127.0.0.1:5174',
+  'http://localhost:4173',
+  'http://127.0.0.1:4173',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
@@ -48,6 +53,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/feedbacks', require('./routes/feedbackRoutes'));
+app.use('/api/orders', require('./routes/orderRoutes'));
 
 // Error handling middleware (optional)
 app.use((err, req, res, next) => {

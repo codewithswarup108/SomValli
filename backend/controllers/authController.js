@@ -1,13 +1,19 @@
 const User = require('../models/userModel');
 const generateToken = require('../utils/generateToken');
+const { normalizeIndianPhone } = require('../utils/phone');
 
 // @desc    Register a new user
 // @route   POST /api/auth/register
 // @access  Public
 const registerUser = async (req, res) => {
   const { name, email, password, phone } = req.body;
+  const normalizedPhone = normalizeIndianPhone(phone);
 
   try {
+    if (!normalizedPhone) {
+      return res.status(400).json({ message: 'Please provide a valid 10-digit Indian mobile number with +91.' });
+    }
+
     const userExists = await User.findOne({ email });
 
     if (userExists) {
@@ -18,7 +24,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       password,
-      phone
+      phone: normalizedPhone
     });
 
     if (user) {
@@ -26,7 +32,7 @@ const registerUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
+        phone: normalizeIndianPhone(user.phone) || user.phone,
         role: user.role,
         token: generateToken(user._id),
       });
@@ -52,7 +58,7 @@ const loginUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
+        phone: normalizeIndianPhone(user.phone) || user.phone,
         role: user.role,
         token: generateToken(user._id),
       });
@@ -76,7 +82,7 @@ const getUserProfile = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
+        phone: normalizeIndianPhone(user.phone) || user.phone,
         role: user.role,
       });
     } else {

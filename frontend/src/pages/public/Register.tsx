@@ -17,8 +17,13 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const value = e.target.name === 'phone'
+      ? e.target.value.replace(/\D/g, '').replace(/^91(?=\d{10}$)/, '').slice(0, 10)
+      : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
   };
+
+  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,11 +31,16 @@ const Register = () => {
       toast.error('Passwords do not match!');
       return;
     }
+
+    if (!/^[6-9]\d{9}$/.test(formData.phone)) {
+      toast.error('Enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.');
+      return;
+    }
     
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+      const response = await fetch(`${apiBase}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +49,7 @@ const Register = () => {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          phone: formData.phone,
+          phone: `+91${formData.phone}`,
           password: formData.password
         }),
       });
@@ -117,8 +127,11 @@ const Register = () => {
                 required
                 value={formData.phone}
                 onChange={handleChange}
+                inputMode="numeric"
+                pattern="[6-9][0-9]{9}"
+                maxLength={10}
                 className="w-full border-2 border-secondary/50 bg-secondary/10 text-white p-3.5 rounded-xl focus:outline-none focus:border-accent transition-colors placeholder:text-gray-400"
-                placeholder="+91 7972666458"
+                placeholder="+91 ******6458"
               />
             </div>
           </div>

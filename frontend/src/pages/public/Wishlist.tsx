@@ -5,14 +5,16 @@ import { useWishlist } from '../../context/WishlistContext';
 import { useCart } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { getAvailableProductVariants } from '../../constants/packSizes';
 
 const Wishlist = () => {
   const { wishlistItems, removeFromWishlist } = useWishlist();
   const { addToCart } = useCart();
 
   const handleAddToCart = (item: any) => {
-    addToCart({ ...item, id: item._id || item.id });
-    toast.success(`${item.name} added to cart!`, { icon: '☕' });
+    const pack = getAvailableProductVariants(item)[0] || { size: '250g', price: item.price };
+    addToCart({ ...item, id: item._id || item.id, name: `${item.name} (${pack.size})`, price: pack.price || item.price, variant: pack.size });
+    toast.success(`${item.name} (${pack.size}) added to cart!`, { icon: '☕' });
   };
 
   return (

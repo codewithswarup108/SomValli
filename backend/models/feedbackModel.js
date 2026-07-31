@@ -4,6 +4,7 @@ const feedbackSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
+    phone: { type: String },
     rating: { type: Number, required: true },
     text: { type: String, required: true },
     image: { type: String },

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiShoppingBag, FiUser, FiMenu, FiX, FiHeart, FiLogOut } from 'react-icons/fi';
+import { FiShoppingBag, FiUser, FiMenu, FiX, FiHeart, FiLogOut, FiShield } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
@@ -18,6 +18,8 @@ const Navbar: React.FC = () => {
   const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
   const wishlistCount = wishlistItems.length;
 
+  const isAdmin = user?.role === 'admin';
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -29,6 +31,7 @@ const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Home', path: '/#home' },
     { name: 'Menu', path: '/#menu' },
+    ...(!isAdmin ? [{ name: 'My Orders', path: '/my-orders' }] : []),
     { name: 'About', path: '/#about' },
     { name: 'Contact', path: '/#contact' },
   ];
@@ -43,7 +46,7 @@ const Navbar: React.FC = () => {
     <header className={`fixed w-full z-50 transition-all duration-300 ease-in-out ${navbarClass}`}>
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
         <Link to="/#home" onClick={() => window.scrollTo(0, 0)} className="text-3xl font-playfair font-black flex items-center gap-2 hover:scale-105 transition-transform">
-          <span className={`${isScrolled ? 'text-primary' : 'text-gradient-gold'} drop-shadow-md`}>SomValli</span>
+          <span className={`${isScrolled ? 'text-primary' : 'text-gradient-gold'} drop-shadow-md`}>SomValli Foods</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -60,28 +63,44 @@ const Navbar: React.FC = () => {
         </nav>
 
         <div className={`hidden md:flex items-center gap-6 ${textColor}`}>
-          <Link to="/wishlist" className="hover:-translate-y-1 hover:scale-110 relative transition-transform duration-200">
-            <FiHeart size={24} strokeWidth={2.5} />
-            {wishlistCount > 0 && (
-              <span className={`absolute -top-2 -right-2 ${isScrolled ? 'bg-primary text-accent' : 'bg-accent text-primary'} font-bold text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg border border-white/20`}>
-                {wishlistCount}
-              </span>
-            )}
-          </Link>
-          <button onClick={() => setIsCartOpen(true)} className="hover:-translate-y-1 hover:scale-110 relative transition-transform duration-200 cursor-pointer">
-            <FiShoppingBag size={24} strokeWidth={2.5} />
-            {cartCount > 0 && (
-              <span className={`absolute -top-2 -right-2 ${isScrolled ? 'bg-primary text-accent' : 'bg-accent text-primary'} font-bold text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg border border-white/20`}>
-                {cartCount}
-              </span>
-            )}
-          </button>
+          {/* Hide Wishlist & Cart Icons for Admin */}
+          {!isAdmin && (
+            <>
+              <Link to="/wishlist" className="hover:-translate-y-1 hover:scale-110 relative transition-transform duration-200">
+                <FiHeart size={24} strokeWidth={2.5} />
+                {wishlistCount > 0 && (
+                  <span className={`absolute -top-2 -right-2 ${isScrolled ? 'bg-primary text-accent' : 'bg-accent text-primary'} font-bold text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg border border-white/20`}>
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
+
+              <button onClick={() => setIsCartOpen(true)} className="hover:-translate-y-1 hover:scale-110 relative transition-transform duration-200 cursor-pointer">
+                <FiShoppingBag size={24} strokeWidth={2.5} />
+                {cartCount > 0 && (
+                  <span className={`absolute -top-2 -right-2 ${isScrolled ? 'bg-primary text-accent' : 'bg-accent text-primary'} font-bold text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg border border-white/20`}>
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+            </>
+          )}
+
+          {/* Admin Direct Button */}
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className="bg-accent text-primary px-4 py-2 rounded-full font-black text-xs uppercase tracking-wider flex items-center gap-2 hover:scale-105 transition-transform shadow-md"
+            >
+              <FiShield size={16} /> Admin Portal
+            </Link>
+          )}
           
           {isAuthenticated && user ? (
             <div className="relative">
               <button 
                 onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                className="w-10 h-10 rounded-full bg-green-500 text-white font-bold text-lg flex items-center justify-center uppercase hover:scale-110 transition-transform shadow-lg border-2 border-white/20"
+                className={`w-10 h-10 rounded-full ${isAdmin ? 'bg-amber-600' : 'bg-green-500'} text-white font-bold text-lg flex items-center justify-center uppercase hover:scale-110 transition-transform shadow-lg border-2 border-white/20`}
                 title={user.email}
               >
                 {user.name.charAt(0)}
@@ -98,7 +117,33 @@ const Navbar: React.FC = () => {
                     <div className="border-b border-gray-100 pb-2 mb-2">
                       <p className="font-bold text-sm truncate">{user.name}</p>
                       <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                      {isAdmin && (
+                        <span className="bg-amber-100 text-amber-900 font-bold text-[10px] px-2 py-0.5 rounded-full inline-block mt-1">
+                          STORE ADMIN
+                        </span>
+                      )}
                     </div>
+
+                    {!isAdmin && (
+                      <Link
+                        to="/my-orders"
+                        onClick={() => setIsProfileDropdownOpen(false)}
+                        className="w-full text-left flex items-center gap-2 text-primary hover:bg-amber-50 p-2 rounded-lg transition-colors font-bold text-sm mb-1"
+                      >
+                        <FiShoppingBag size={16} className="text-accent" /> My Orders
+                      </Link>
+                    )}
+
+                    {isAdmin && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setIsProfileDropdownOpen(false)}
+                        className="w-full text-left flex items-center gap-2 text-amber-600 hover:bg-amber-50 p-2 rounded-lg transition-colors font-bold text-sm mb-1"
+                      >
+                        ⚡ Admin Dashboard
+                      </Link>
+                    )}
+
                     <button 
                       onClick={() => {
                         logout();
@@ -146,6 +191,15 @@ const Navbar: React.FC = () => {
                   {link.name}
                 </a>
               ))}
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-accent text-xl font-bold hover:scale-110 transition-all uppercase tracking-widest"
+                >
+                  ⚡ Admin Dashboard
+                </Link>
+              )}
             </div>
           </motion.div>
         )}

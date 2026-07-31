@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
+      match: [/^\+91[6-9]\d{9}$/, 'Please provide a valid Indian mobile number in +91XXXXXXXXXX format'],
     },
   },
   { timestamps: true }
