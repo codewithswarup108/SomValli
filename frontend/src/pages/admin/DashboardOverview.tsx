@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/admin/Sidebar';
 import { 
-  FiShoppingBag, FiDollarSign, FiClock, FiCheckCircle, FiArrowRight, 
-  FiPackage, FiPlus, FiEdit2, FiTag, FiExternalLink, FiXCircle, FiGrid
+  FiShoppingBag, FiDollarSign, FiClock, FiArrowRight,
+  FiPackage, FiPlus, FiEdit2, FiExternalLink, FiXCircle, FiGrid
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -55,7 +55,6 @@ const DashboardOverview: React.FC = () => {
   const totalOrders = orders.length;
   const totalRevenue = orders.filter(o => o.status !== 'Cancelled').reduce((acc, curr) => acc + (curr.totalPrice || 0), 0);
   const pendingOrders = orders.filter(o => o.status === 'Pending' || o.status === 'Processing').length;
-  const deliveredOrders = orders.filter(o => o.status === 'Delivered').length;
   const cancelledOrders = orders.filter(o => o.status === 'Cancelled');
 
   const recentOrders = orders.slice(0, 6);

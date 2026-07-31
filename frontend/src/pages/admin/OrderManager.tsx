@@ -25,6 +25,7 @@ type Order = {
   status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
   paymentMethod: string;
   isPaid: boolean;
+  transactionId?: string;
   cancelReason?: string;
   createdAt: string;
 };

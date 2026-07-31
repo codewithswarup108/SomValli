@@ -21,6 +21,21 @@ type Product = {
   variants?: { size: string; price: number; available: boolean }[];
 };
 
+type FormVariant = { size: string; price: string; available: boolean };
+
+type ProductFormData = {
+  name: string;
+  price: string;
+  retailPrice: string;
+  shopPrice: string;
+  description: string;
+  image: string;
+  category: string;
+  customCategory: string;
+  countInStock: string;
+  variants: FormVariant[];
+};
+
 const DEFAULT_CATEGORIES = ['Masala Tea', 'Sweets & Laddoos', 'Biscuits & Cookies', 'Chocolates', 'Healthy Snacks', 'Spices', 'General'];
 
 const ProductManager: React.FC = () => {
@@ -36,7 +51,7 @@ const ProductManager: React.FC = () => {
   const [localImageName, setLocalImageName] = useState('');
 
   // Form State
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ProductFormData>({
     name: '',
     price: '',
     retailPrice: '',

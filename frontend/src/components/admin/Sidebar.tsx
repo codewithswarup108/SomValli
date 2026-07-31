@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FiGrid, FiShoppingBag, FiArrowLeft, FiBox, FiPackage } from 'react-icons/fi';
+import { FiGrid, FiShoppingBag, FiArrowLeft, FiPackage } from 'react-icons/fi';
 
 const Sidebar: React.FC = () => {
   const navItems = [

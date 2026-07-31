@@ -35,7 +35,7 @@ const Login = () => {
       } else {
         toast.error(data.message || 'Login failed!');
       }
-    } catch (error) {
+    } catch {
       toast.error('Server error. Please try again later.');
     } finally {
       setIsLoading(false);

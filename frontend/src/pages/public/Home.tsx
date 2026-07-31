@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useAuth } from '../../context/AuthContext';
-import { FiHeart, FiCamera, FiImage, FiRefreshCw, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiHeart, FiCamera, FiRefreshCw, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { getAvailableProductVariants } from '../../constants/packSizes';
 import { Link } from 'react-router-dom';

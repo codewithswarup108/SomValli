@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiInstagram, FiFacebook, FiTwitter, FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
+import { FiInstagram, FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
