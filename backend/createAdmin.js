@@ -17,14 +17,14 @@ const createAdmin = async () => {
       console.log('Note: Password is encrypted. If you forgot it, we can create a new one or reset it.');
     } else {
       const admin = await User.create({
-        name: 'Admin',
-        email: 'admin@somvalli.com',
+        name: 'Pritam Sudhakar Hajare',
+        email: 'pritamhajare12@gmail.com',
         password: 'adminpassword123',
-        phone: '+917972666458',
+        phone: '+916307048821',
         role: 'admin'
       });
       console.log('New Admin User Created!');
-      console.log('Email: admin@somvalli.com');
+      console.log('Email: pritamhajare12@gmail.com');
       console.log('Password: adminpassword123');
     }
     process.exit();

@@ -294,7 +294,7 @@ const Home = () => {
               <h3 className="text-3xl font-playfair mb-4 text-white hover:text-accent font-bold">Store Location</h3>
               <p className="font-poppins text-lg opacity-90 mb-2 font-medium">Somvalli Foods, Shop No. 4, Shantipoli, Tehsil: Shahapur</p>
               <p className="font-poppins text-sm opacity-70 mb-4">Pin Code: 421601, District: Thane, Maharashtra.</p>
-              <p className="font-poppins text-xs text-accent font-bold">📞 Contact: 7972666458 | ✉️ somvallifoods@gmail.com</p>
+              <p className="font-poppins text-xs text-accent font-bold">📞 Contact: 6307048821 | ✉️ pritamhajare12@gmail.com</p>
             </div>
 
             {/* Popup Card */}
@@ -310,13 +310,13 @@ const Home = () => {
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-accent text-xl font-bold">SH</div>
                     <div>
-                      <p className="font-bold font-poppins text-lg">Swarup Holkar</p>
+                      <p className="font-bold font-poppins text-lg">Pritam Sudhakar Hajare</p>
                       <p className="text-xs text-gray-500 font-montserrat uppercase font-bold">Owner</p>
                     </div>
                   </div>
                   <div className="space-y-2 font-poppins text-sm mb-4 bg-gray-100 p-3 rounded-lg">
-                    <p><strong>📞 Phone:</strong> <a href="tel:7972666458" className="hover:text-accent smooth-transition">7972666458</a></p>
-                    <p><strong>✉️ Mail:</strong> <a href="mailto:swarupholkar4@gmail.com" className="hover:text-accent smooth-transition">swarupholkar4@gmail.com</a></p>
+                    <p><strong>📞 Phone:</strong> <a href="tel:6307048821" className="hover:text-accent smooth-transition">6307048821</a></p>
+                    <p><strong>✉️ Mail:</strong> <a href="mailto:pritamhajare12@gmail.com" className="hover:text-accent smooth-transition">pritamhajare12@gmail.com</a></p>
                     <p><strong>📍 Addr:</strong>Somvalli Foods, Shop No. 4, Shantipoli, Tehsil: Shahapur</p>
                     <p className="font-poppins text-sm opacity-70 mb-4">Pin Code: 421601, District: Thane, Maharashtra</p>
                   </div>

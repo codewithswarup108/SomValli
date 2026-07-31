@@ -133,7 +133,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
       message += `Grand Total: ₹${cartTotal.toFixed(2)}\n\n`;
       message += `Thank you.\nSomValli Foods.`;
 
-      const whatsappUrl = `https://wa.me/917972666458?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/916307048821?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
 
       toast.success('Order registered! Redirecting to WhatsApp...', { duration: 4000, icon: '📱' });
@@ -191,7 +191,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="e.g. Swarup Holkar"
+                    placeholder="e.g. Pritam Sudhakar Hajare"
                     className="w-full bg-white border border-gray-300 rounded-xl p-3 text-sm focus:outline-none focus:border-accent text-primary shadow-sm"
                   />
                 </div>

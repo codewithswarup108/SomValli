@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
                 <a href="https://instagram.com/somvallifoods" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent hover:scale-110 smooth-transition text-white">
                   <FiInstagram size={20} />
                 </a>
-                <a href="https://wa.me/917972666458" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-green-500 hover:scale-110 smooth-transition text-white">
+                <a href="https://wa.me/916307048821" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-green-500 hover:scale-110 smooth-transition text-white">
                   <FaWhatsapp size={20} />
                 </a>
               </div>
@@ -116,11 +116,11 @@ const Footer: React.FC = () => {
                 </li>
                 <li className="flex items-center gap-3 text-gray-400">
                   <FiPhone className="text-accent flex-shrink-0" size={20} />
-                  <a href="tel:7972666458" className="hover:text-accent smooth-transition">+91 7972666458</a>
+                  <a href="tel:6307048821" className="hover:text-accent smooth-transition">+91 6307048821</a>
                 </li>
                 <li className="flex items-center gap-3 text-gray-400">
                   <FiMail className="text-accent flex-shrink-0" size={20} />
-                  <a href="mailto:somvallifoods@gmail.com" className="hover:text-accent smooth-transition">somvallifoods@gmail.com</a>
+                  <a href="mailto:pritamhajare12@gmail.com" className="hover:text-accent smooth-transition">pritamhajare12@gmail.com</a>
                 </li>
               </ul>
             </div>
