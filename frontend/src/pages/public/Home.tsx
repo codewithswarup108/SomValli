@@ -184,7 +184,7 @@ const Home = () => {
             <h2 className="text-4xl md:text-6xl font-playfair font-bold text-gradient-gold mb-8">Our Philosophy</h2>
             <div className="h-1 w-24 bg-accent mx-auto mb-10 rounded-full"></div>
             <p className="text-black max-w-4xl mx-auto text-xl md:text-2xl leading-relaxed font-poppins font-bold">
-              At SomValli – <span className="text-accent italic">Taste it, Feel it</span>, our passion is to bring India's finest gourmet products to every home. From premium Assam & Masala Tea Powders to rich Dark Chocolates, handmade Butter Biscuits, aromatic Spices, and gourmet Snacks, every SomValli creation is crafted with uncompromising quality, freshness, and authentic taste.
+              At SomValli – <span className="text-accent italic">Taste it, Feel it</span>, we bring you Somvalli Kashmir Rose Leaf Special Blend Tea, Somvalli Dink (Edible Gum) & Dry Fruit Ladoo, Somvalli Pistachio Chocolates, Somvalli Almond Chocolates, and Somvalli Special Blend Tea. Our products are prepared with carefully selected ingredients, hygienic handling, and a commitment to consistent taste and quality. Somvalli Foods is FSSAI licensed under License No. 21524197000910, reflecting our commitment to food safety, purity, and customer trust.
             </p>
           </motion.div>
         </div>
@@ -292,7 +292,7 @@ const Home = () => {
           >
             <div className="p-8 rounded-3xl border-2 border-secondary/50 bg-secondary/10 backdrop-blur-md hover:border-accent hover:bg-secondary/30 transition-colors duration-200">
               <h3 className="text-3xl font-playfair mb-4 text-white hover:text-accent font-bold">Store Location</h3>
-              <p className="font-poppins text-lg opacity-90 mb-2 font-medium">Somvalli Foods, Shop No. 4, Shantipoli, Tehsil: Shahapur</p>
+              <p className="font-poppins text-lg opacity-90 mb-2 font-medium">Somvalli Foods, Shop No. 4, Cherpoli, Tehsil: Shahapur</p>
               <p className="font-poppins text-sm opacity-70 mb-4">Pin Code: 421601, District: Thane, Maharashtra.</p>
               <p className="font-poppins text-xs text-accent font-bold">📞 Contact: 6307048821 | ✉️ pritamhajare12@gmail.com</p>
             </div>
@@ -317,7 +317,7 @@ const Home = () => {
                   <div className="space-y-2 font-poppins text-sm mb-4 bg-gray-100 p-3 rounded-lg">
                     <p><strong>📞 Phone:</strong> <a href="tel:6307048821" className="hover:text-accent smooth-transition">6307048821</a></p>
                     <p><strong>✉️ Mail:</strong> <a href="mailto:pritamhajare12@gmail.com" className="hover:text-accent smooth-transition">pritamhajare12@gmail.com</a></p>
-                    <p><strong>📍 Addr:</strong>Somvalli Foods, Shop No. 4, Shantipoli, Tehsil: Shahapur</p>
+                    <p><strong>📍 Addr:</strong>Somvalli Foods, Shop No. 4, Cherpoli, Tehsil: Shahapur</p>
                     <p className="font-poppins text-sm opacity-70 mb-4">Pin Code: 421601, District: Thane, Maharashtra</p>
                   </div>
                   <p className="text-center font-playfair font-bold text-accent italic border-t border-gray-200 pt-3">

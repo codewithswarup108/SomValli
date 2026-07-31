@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
               </div>
 
               <div className="flex gap-4 pt-2">
-                <a href="https://instagram.com/somvallifoods" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent hover:scale-110 smooth-transition text-white">
+                <a href="https://www.instagram.com/somvalli_food?igsh=MWRraGRpYjQ0NGJpMg==" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent hover:scale-110 smooth-transition text-white">
                   <FiInstagram size={20} />
                 </a>
                 <a href="https://wa.me/916307048821" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-green-500 hover:scale-110 smooth-transition text-white">
@@ -112,7 +112,7 @@ const Footer: React.FC = () => {
               <ul className="space-y-4 font-poppins text-sm">
                 <li className="flex items-start gap-3 text-gray-400">
                   <FiMapPin className="text-accent mt-1 flex-shrink-0" size={20} />
-                  <span>Somvalli Foods, Shop No. 4, Shantipoli, Tehsil: Shahapur, Pin Code: 421601, District: Thane, Maharashtra.</span>
+                  <span>Somvalli Foods, Shop No. 4, Cherpoli, Tehsil: Shahapur, Pin Code: 421601, District: Thane, Maharashtra.</span>
                 </li>
                 <li className="flex items-center gap-3 text-gray-400">
                   <FiPhone className="text-accent flex-shrink-0" size={20} />
