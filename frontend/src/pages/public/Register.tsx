@@ -102,7 +102,7 @@ const Register = () => {
               value={formData.name}
               onChange={handleChange}
               className="w-full border-2 border-secondary/50 bg-secondary/10 text-white p-3.5 rounded-xl focus:outline-none focus:border-accent transition-colors placeholder:text-gray-400"
-              placeholder="Pritam Sudhakar Hajare"
+              placeholder="Swarup Holkar"
             />
           </div>
 

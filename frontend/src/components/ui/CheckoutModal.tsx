@@ -191,7 +191,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="e.g. Pritam Sudhakar Hajare"
+                    placeholder="e.g. Swarup Holkar"
                     className="w-full bg-white border border-gray-300 rounded-xl p-3 text-sm focus:outline-none focus:border-accent text-primary shadow-sm"
                   />
                 </div>
