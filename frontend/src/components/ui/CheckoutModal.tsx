@@ -134,7 +134,9 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
       message += `Thank you.\nSomValli Foods.`;
 
       const whatsappUrl = `https://wa.me/916307048821?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
+
+// Mobile + Desktop compatible
+window.location.href = whatsappUrl;
 
       toast.success('Order registered! Redirecting to WhatsApp...', { duration: 4000, icon: '📱' });
       clearCart();
