@@ -138,6 +138,7 @@ const Products: React.FC = () => {
                       {item.category}
                     </span>
                     <h3 className="text-2xl font-playfair font-black text-primary mb-2">{item.name}</h3>
+                    <p className="text-xs text-gray-500 font-bold mb-2">{Number(item.countInStock) > 0 ? `In stock: ${item.countInStock} pack${item.countInStock > 1 ? 's' : ''}` : 'Out of stock'}</p>
                     <p className="text-gray-600 text-xs mb-4 line-clamp-3 leading-relaxed">{item.description}</p>
                     
                     {/* Dual Pricing & Pack Sizes Box */}

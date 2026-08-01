@@ -138,6 +138,7 @@ const ProductDetails: React.FC = () => {
               </div>
 
               <p className="text-xs font-bold text-gray-500">Customer price for the selected pack</p>
+              <p className="text-xs text-gray-700 font-semibold mt-3">{availableStock > 0 ? `${availableStock} pack${availableStock === 1 ? '' : 's'} available` : 'Out of stock'}</p>
             </div>
 
             <p className="text-gray-600 leading-relaxed text-sm">{product.description}</p>

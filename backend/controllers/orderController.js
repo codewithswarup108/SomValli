@@ -182,13 +182,19 @@ const updateOrderStatus = async (req, res) => {
     const order = await Order.findById(req.params.id);
 
     if (order) {
+      const previousStatus = order.status;
+      if (status && status === 'Cancelled' && previousStatus !== 'Cancelled') {
+        for (const item of order.orderItems) {
+          await Product.findByIdAndUpdate(item.product, { $inc: { countInStock: item.qty } });
+        }
+      }
       if (status) {
         order.status = status;
       }
       if (typeof isPaid === 'boolean') {
         order.isPaid = isPaid;
       }
-      if (cancelReason) {
+      if (cancelReason && status === 'Cancelled') {
         order.cancelReason = cancelReason;
         order.cancelledAt = new Date();
       }

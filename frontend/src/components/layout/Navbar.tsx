@@ -32,6 +32,7 @@ const Navbar: React.FC = () => {
     { name: 'Home', path: '/#home' },
     { name: 'Menu', path: '/#menu' },
     ...(!isAdmin ? [{ name: 'My Orders', path: '/my-orders' }] : []),
+    { name: 'Policy', path: '/policy' },
     { name: 'About', path: '/#about' },
     { name: 'Contact', path: '/#contact' },
   ];

@@ -12,6 +12,7 @@ import Wishlist from './pages/public/Wishlist'
 import Products from './pages/public/Products'
 import ProductDetails from './pages/public/ProductDetails'
 import MyOrders from './pages/public/MyOrders'
+import Policy from './pages/public/Policy'
 import DashboardOverview from './pages/admin/DashboardOverview'
 import OrderManager from './pages/admin/OrderManager'
 import ProductManager from './pages/admin/ProductManager'
@@ -49,6 +50,7 @@ function MainLayout() {
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/my-orders" element={<MyOrders />} />
+          <Route path="/policy" element={<Policy />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/wishlist" element={<Wishlist />} />

@@ -102,6 +102,7 @@ const Footer: React.FC = () => {
               <ul className="space-y-3 font-poppins text-sm">
                 <li><a href="/#about" className="text-gray-400 hover:text-accent smooth-transition">About SomValli</a></li>
                 <li><a href="/#menu" className="text-gray-400 hover:text-accent smooth-transition">Product Catalog</a></li>
+                <li><Link to="/policy" className="text-gray-400 hover:text-accent smooth-transition">Our Policy</Link></li>
                 <li><a href="/#contact" className="text-gray-400 hover:text-accent smooth-transition">Contact Us</a></li>
               </ul>
             </div>
@@ -151,7 +152,7 @@ const Footer: React.FC = () => {
               &copy; {new Date().getFullYear()} SOMVALLI FOODS. All rights reserved. FSSAI Lic No: 21524197000910
             </p>
             <div className="flex gap-6 text-sm font-poppins text-gray-500">
-              <Link to="/privacy" className="hover:text-accent transition-colors">Privacy Policy</Link>
+              <Link to="/policy" className="hover:text-accent transition-colors">Our Policy</Link>
               <Link to="/terms" className="hover:text-accent transition-colors">Terms of Service</Link>
             </div>
           </div>
