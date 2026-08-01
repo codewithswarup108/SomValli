@@ -52,14 +52,14 @@ const Navbar: React.FC = () => {
 
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
-              href={link.path}
+              to={link.path}
               className={`${textColor} hover:-translate-y-1 hover:scale-110 font-bold font-montserrat relative group transition-all duration-200 tracking-wider uppercase text-sm`}
             >
               {link.name}
               <span className={`absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${isScrolled ? 'bg-primary' : 'bg-accent'}`}></span>
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -183,14 +183,14 @@ const Navbar: React.FC = () => {
           >
             <div className="flex flex-col items-center py-8 gap-6">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.path}
+                  to={link.path}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-cream text-xl font-bold hover:text-accent hover:scale-110 transition-all uppercase tracking-widest"
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
               {isAdmin && (
                 <Link
