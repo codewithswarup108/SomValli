@@ -240,10 +240,6 @@ const Home = () => {
                   >
                     <FiHeart size={20} className={isInWishlist(item._id || item.id) ? 'fill-current' : ''} />
                   </button>
-
-                  <div className="absolute top-4 right-4 bg-primary text-accent font-black px-4 py-1.5 rounded-full shadow-lg text-sm">
-                    ₹{getAvailableProductVariants(item)[0]?.price || item.price}
-                  </div>
                 </div>
                 <div className="p-6 relative bg-white flex-1 flex flex-col justify-between">
                   <div>

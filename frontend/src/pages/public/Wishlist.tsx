@@ -64,9 +64,6 @@ const Wishlist = () => {
                   >
                     <FiTrash2 size={20} />
                   </button>
-                  <div className="absolute top-4 left-4 bg-primary text-accent font-black px-5 py-2 rounded-full shadow-lg">
-                    ₹{item.price}
-                  </div>
                 </div>
                 <div className="p-8 relative bg-white flex-1 flex flex-col">
                   <h3 className="text-2xl font-playfair font-black mb-2 text-primary">{item.name}</h3>
