@@ -133,15 +133,16 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
       message += `Grand Total: ₹${cartTotal.toFixed(2)}\n\n`;
       message += `Thank you.\nSomValli Foods.`;
 
-      const whatsappUrl = `https://wa.me/916307048821?text=${encodeURIComponent(message)}`;
-
-// Mobile + Desktop compatible
-window.location.href = whatsappUrl;
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=916307048821&text=${encodeURIComponent(message)}`;
 
       toast.success('Order registered! Redirecting to WhatsApp...', { duration: 4000, icon: '📱' });
       clearCart();
       setIsCartOpen(false);
       onClose();
+
+      window.setTimeout(() => {
+        window.location.assign(whatsappUrl);
+      }, 500);
     } catch (err: any) {
       console.error(err);
       toast.error(err.message || 'Could not save order');
