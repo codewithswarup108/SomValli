@@ -9,11 +9,11 @@ const LogoAnimation: React.FC = () => (
     className="relative flex h-24 w-24 items-center justify-center rounded-full border border-accent/70 bg-primary shadow-[0_0_55px_rgba(226,166,61,0.38)] sm:h-28 sm:w-28"
   >
     <motion.div
-        animate={{ scale: [1, 1.06, 1], opacity: [0.7, 1, 0.7] }}
-        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute inset-2 rounded-full border border-accent/50"
-      />
-      <img src="/hero.png" alt="SomValli Foods logo" className="w-12 h-12 object-contain sm:w-16 sm:h-16" />
+      animate={{ scale: [1, 1.06, 1], opacity: [0.7, 1, 0.7] }}
+      transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+      className="absolute inset-2 rounded-full border border-accent/50"
+    />
+    <span className="font-playfair text-4xl font-black text-accent sm:text-5xl">S</span>
   </motion.div>
 );
 
