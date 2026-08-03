@@ -139,7 +139,7 @@ const Home = () => {
           <video
             ref={videoRef}
             src="/hero-video.mp4"
-            poster="/hero-mobile.jpg"
+            poster="/hero-mobile.png"
             muted
             autoPlay
             playsInline
@@ -148,7 +148,7 @@ const Home = () => {
             className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${isVideoEnded ? 'opacity-90 contrast-110 brightness-100' : 'opacity-100'}`}
           />
         ) : (
-          <img src="/hero-mobile.jpg" alt="SomValli" className="absolute inset-0 w-full h-full object-cover" />
+          <img src="/hero-mobile.png" alt="SomValli" className="absolute inset-0 w-full h-full object-cover" />
         )}
 
         {/* Premium Dark Vignette & Gradient Overlay */}
