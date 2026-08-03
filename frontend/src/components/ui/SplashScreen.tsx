@@ -34,15 +34,15 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.65 }}
-            className="relative z-10 flex flex-col items-center text-center"
+            className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6"
           >
             <LogoAnimation />
-            <AnimatedText text="SomValli Foods" />
+              <AnimatedText text="SomValli Foods" />
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.15, duration: 0.65 }}
-              className="mt-4 space-y-1 text-xs font-medium uppercase tracking-[0.28em] text-cream/75 sm:text-sm"
+                className="mt-4 space-y-1 text-xs sm:text-sm md:text-base font-medium uppercase tracking-[0.18em] text-cream/75"
             >
               <p>Premium Foods</p>
               <p>Taste of Tradition</p>

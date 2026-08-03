@@ -49,6 +49,7 @@ const Home = () => {
   // Hero Video State
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleVideoEnd = () => {
     setIsVideoEnded(true);
@@ -89,6 +90,14 @@ const Home = () => {
       .catch(err => console.error(err));
   }, []);
 
+  // Detect mobile viewport to show image fallback instead of video
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const handleFeedbackSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isAuthenticated || !user) return;
@@ -126,17 +135,21 @@ const Home = () => {
       {/* PREMIUM HERO VIDEO SECTION */}
       <section id="home" className="relative h-[100vh] w-full flex flex-col justify-end items-center overflow-hidden bg-black">
         {/* Cinematic Video Player */}
-        <video
-          ref={videoRef}
-          src="/hero-video.mp4"
-          muted
-          autoPlay
-          playsInline
-          preload="auto"
-          onEnded={handleVideoEnd}
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${isVideoEnded ? 'opacity-75 filter contrast-110 brightness-90' : 'opacity-100'
-            }`}
-        />
+        {!isMobile ? (
+          <video
+            ref={videoRef}
+            src="/hero-video.mp4"
+            poster="/hero-mobile.jpg"
+            muted
+            autoPlay
+            playsInline
+            preload="auto"
+            onEnded={handleVideoEnd}
+            className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${isVideoEnded ? 'opacity-90 contrast-110 brightness-100' : 'opacity-100'}`}
+          />
+        ) : (
+          <img src="/hero-mobile.jpg" alt="SomValli" className="absolute inset-0 w-full h-full object-cover" />
+        )}
 
         {/* Premium Dark Vignette & Gradient Overlay */}
         <div
