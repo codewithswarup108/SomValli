@@ -135,11 +135,11 @@ const Home = () => {
       {/* PREMIUM HERO VIDEO SECTION */}
       <section id="home" className="relative h-[100vh] w-full flex flex-col justify-end items-center overflow-hidden bg-black">
         {/* Cinematic Video Player */}
-          {!isMobile ? (
+        {!isMobile ? (
           <video
             ref={videoRef}
             src="/hero-video.mp4"
-            poster="/hero.png"
+            poster="/hero-mobile.jpg"
             muted
             autoPlay
             playsInline
@@ -148,7 +148,7 @@ const Home = () => {
             className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${isVideoEnded ? 'opacity-90 contrast-110 brightness-100' : 'opacity-100'}`}
           />
         ) : (
-          <img src="/hero.png" alt="SomValli" className="absolute inset-0 w-full h-full object-cover" />
+          <img src="/hero-mobile.jpg" alt="SomValli" className="absolute inset-0 w-full h-full object-cover" />
         )}
 
         {/* Premium Dark Vignette & Gradient Overlay */}
