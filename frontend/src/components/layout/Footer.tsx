@@ -67,8 +67,10 @@ const Footer: React.FC = () => {
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             {/* Brand */}
-            <div className="space-y-4">
-              <h2 className="text-4xl font-playfair font-bold text-accent">SOMVALLI FOODS</h2>
+            <div className="space-y-4 flex items-start gap-4">
+              <img src="/hero.png" alt="SomValli Foods logo" className="w-20 h-auto object-contain" />
+              <div>
+                <h2 className="text-2xl md:text-4xl font-playfair font-bold text-accent">SOMVALLI FOODS</h2>
               <p className="text-accent font-bold font-poppins text-xs uppercase tracking-wider">
                 Premium Taste • Pure Quality • Unforgettable Moments
               </p>

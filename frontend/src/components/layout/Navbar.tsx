@@ -46,8 +46,9 @@ const Navbar: React.FC = () => {
   return (
     <header className={`fixed w-full z-50 transition-all duration-300 ease-in-out ${navbarClass}`}>
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
-        <Link to="/#home" onClick={() => window.scrollTo(0, 0)} className="text-3xl font-playfair font-black flex items-center gap-2 hover:scale-105 transition-transform">
-          <span className={`${isScrolled ? 'text-primary' : 'text-gradient-gold'} drop-shadow-md`}>SomValli Foods</span>
+        <Link to="/#home" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-3 hover:scale-105 transition-transform">
+          <img src="/hero.png" alt="SomValli Foods" className="h-10 w-10 object-contain" />
+          <span className={`text-2xl font-playfair font-black ${isScrolled ? 'text-primary' : 'text-gradient-gold'} drop-shadow-md hidden sm:inline-block`}>SomValli Foods</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
