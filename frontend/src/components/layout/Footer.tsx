@@ -97,7 +97,8 @@ const Footer: React.FC = () => {
                   <FaWhatsapp size={20} />
                 </a>
               </div>
-            </div>
+              </div>
+              </div>
 
             {/* Quick Links */}
             <div className="space-y-4">
