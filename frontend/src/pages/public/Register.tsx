@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
+import { BASE_API_URL } from '../../utils/api';
 
 const Register = () => {
   const { login } = useAuth();
@@ -15,6 +16,7 @@ const Register = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const apiBase = BASE_API_URL;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.name === 'phone'
@@ -22,8 +24,6 @@ const Register = () => {
       : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
   };
-
-  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();

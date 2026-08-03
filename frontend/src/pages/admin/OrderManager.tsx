@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Sidebar from '../../components/admin/Sidebar';
 import { FiSearch, FiEye, FiTrash2, FiClock, FiCheckCircle, FiTruck, FiXCircle, FiX, FiRefreshCw } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import { BASE_API_URL } from '../../utils/api';
 
 type OrderItem = {
   product?: string;
@@ -37,7 +38,7 @@ const OrderManager: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('All');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
-  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const apiBase = BASE_API_URL;
 
   const fetchOrders = async () => {
     setLoading(true);

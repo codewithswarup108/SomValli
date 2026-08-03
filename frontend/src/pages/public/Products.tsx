@@ -6,6 +6,7 @@ import { FiHeart, FiShoppingBag, FiSearch } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { getAvailableProductVariants } from '../../constants/packSizes';
+import { apiUrl } from '../../utils/api';
 
 const Products: React.FC = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -16,7 +17,7 @@ const Products: React.FC = () => {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/products`, { credentials: 'include' })
+    fetch(apiUrl('/api/products'), { credentials: 'include' })
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setProducts(data);

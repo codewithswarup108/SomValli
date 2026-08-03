@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
+import { BASE_API_URL } from '../../utils/api';
 
 const Login = () => {
   const { login } = useAuth();
@@ -10,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const apiBase = BASE_API_URL;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

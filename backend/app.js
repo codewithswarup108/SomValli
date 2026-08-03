@@ -18,6 +18,10 @@ const allowedOrigins = [
   'http://127.0.0.1:5174',
   'http://localhost:4173',
   'http://127.0.0.1:4173',
+  'https://somvallifoods.in',
+  'https://www.somvallifoods.in',
+  'https://som-valli-qnrurby9x-codewithswarup108s-projects.vercel.app',
+  'https://som-valli-9a3pv6r87-codewithswarup108s-projects.vercel.app',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 

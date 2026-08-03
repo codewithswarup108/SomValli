@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiInstagram, FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { apiUrl } from '../../utils/api';
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -35,7 +36,7 @@ const Footer: React.FC = () => {
     e.preventDefault();
     if (email) {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/check-email`, {
+        const response = await fetch(apiUrl('/api/auth/check-email'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',

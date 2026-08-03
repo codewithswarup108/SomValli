@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { FiShoppingBag, FiClock, FiCheckCircle, FiTruck, FiXCircle, FiRefreshCw, FiAlertCircle, FiX } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import { BASE_API_URL } from '../../utils/api';
 
 type OrderItem = {
   product?: string;
@@ -41,7 +42,7 @@ const MyOrders: React.FC = () => {
   const [cancelReason, setCancelReason] = useState('');
   const [submittingCancel, setSubmittingCancel] = useState(false);
 
-  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const apiBase = BASE_API_URL;
 
   const fetchMyOrders = async () => {
     setLoading(true);

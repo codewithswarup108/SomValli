@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
+import { apiUrl } from '../../utils/api';
 import { FiHeart, FiShoppingBag, FiArrowLeft, FiCheck } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { getAvailableProductVariants, getProductVariants } from '../../constants/packSizes';
@@ -21,7 +22,7 @@ const ProductDetails: React.FC = () => {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`, { credentials: 'include' })
+    fetch(apiUrl(`/api/products/${id}`), { credentials: 'include' })
       .then(res => res.json())
       .then(data => {
         setProduct(data);

@@ -6,6 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 import VariantSelector from './VariantSelector';
 import { getAvailableProductVariants } from '../../constants/packSizes';
+import { BASE_API_URL } from '../../utils/api';
 
 const getLocalPhoneNumber = (phone?: string) => {
   const digits = String(phone || '').replace(/\D/g, '');
@@ -40,7 +41,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
   };
 
   const saveOrderToDatabase = async (orderPayload: any) => {
-    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const apiBase = BASE_API_URL;
     const res = await fetch(`${apiBase}/api/orders`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

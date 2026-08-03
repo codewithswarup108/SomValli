@@ -4,6 +4,7 @@ import Sidebar from '../../components/admin/Sidebar';
 import { FiPlus, FiEdit2, FiTrash2, FiSearch, FiX, FiRefreshCw } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { AVAILABLE_PACK_SIZES } from '../../constants/packSizes';
+import { BASE_API_URL } from '../../utils/api';
 
 type Product = {
   _id: string;
@@ -66,7 +67,7 @@ const ProductManager: React.FC = () => {
     ],
   });
 
-  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const apiBase = BASE_API_URL;
 
   const handleLocalImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

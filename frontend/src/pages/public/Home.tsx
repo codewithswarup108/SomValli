@@ -7,6 +7,7 @@ import { FiHeart, FiCamera, FiRefreshCw, FiChevronLeft, FiChevronRight } from 'r
 import toast from 'react-hot-toast';
 import { getAvailableProductVariants } from '../../constants/packSizes';
 import { Link } from 'react-router-dom';
+import { apiUrl } from '../../utils/api';
 
 const Home = () => {
   const { addToCart } = useCart();
@@ -77,12 +78,12 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`, { credentials: 'include' })
+    fetch(apiUrl('/api/products'), { credentials: 'include' })
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error(err));
 
-    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/feedbacks`, { credentials: 'include' })
+    fetch(apiUrl('/api/feedbacks'), { credentials: 'include' })
       .then(res => res.json())
       .then(data => setFeedbacks(data))
       .catch(err => console.error(err));
@@ -98,7 +99,7 @@ const Home = () => {
     const text = (form.elements.namedItem('experience') as HTMLTextAreaElement).value;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/feedbacks`, {
+      const response = await fetch(apiUrl('/api/feedbacks'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
