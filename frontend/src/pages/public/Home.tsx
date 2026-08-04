@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
@@ -8,6 +9,8 @@ import toast from 'react-hot-toast';
 import { getAvailableProductVariants } from '../../constants/packSizes';
 import { Link } from 'react-router-dom';
 import { apiUrl } from '../../utils/api';
+
+const HelmetSafe = Helmet as unknown as React.ComponentType<any>;
 
 const Home = () => {
   const { addToCart } = useCart();
@@ -132,6 +135,17 @@ const Home = () => {
 
   return (
     <div className="w-full">
+      <HelmetSafe>
+        <title>SomValli Foods | Homemade Tea Powder, Coffee Powder & Premium Food Products Maharashtra</title>
+        <meta
+          name="description"
+          content="SomValli Foods offers premium homemade tea powder, coffee powder, chocolates, dry fruits and authentic homemade food products. Order quality food products online across Maharashtra."
+        />
+        <meta
+          name="keywords"
+          content="Homemade Tea Powder, Homemade Coffee Powder, Tea Powder Maharashtra, Coffee Powder Online, Homemade Food Products, Dry Fruits, Chocolates, SomValli Foods"
+        />
+      </HelmetSafe>
       {/* PREMIUM HERO VIDEO SECTION */}
       <section id="home" className="relative h-[100vh] w-full flex flex-col justify-end items-center overflow-hidden bg-black">
         {/* Cinematic Video Player */}
