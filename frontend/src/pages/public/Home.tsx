@@ -145,6 +145,37 @@ const Home = () => {
           name="keywords"
           content="Homemade Tea Powder, Homemade Coffee Powder, Tea Powder Maharashtra, Coffee Powder Online, Homemade Food Products, Dry Fruits, Chocolates, SomValli Foods"
         />
+        <script type="application/ld+json">
+          {`{
+            "@context": "https://schema.org",
+            "@type": "FoodEstablishment",
+            "name": "SomValli Foods",
+            "url": "https://somvallifoods.in",
+            "description": "SomValli Foods provides premium homemade tea powder, coffee powder, chocolates, dry fruits and authentic homemade food products across Maharashtra.",
+            "telephone": "6307048821",
+            "email": "pritamhajare12@gmail.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Somvalli Foods, Shop No. 4, Cherpoli, Tehsil Shahapur",
+              "addressLocality": "Thane",
+              "addressRegion": "Maharashtra",
+              "addressCountry": "India",
+              "postalCode": "421601"
+            },
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "name": "SomValli Foods Product Policy"
+            },
+            "makesOffer": [
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Homemade Tea Powder" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Special Blend Tea" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Coffee Powder" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Pistachio Chocolates" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Almond Chocolates" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Dry Fruit Ladoo" } }
+            ]
+          }`}
+        </script>
       </HelmetSafe>
       {/* PREMIUM HERO VIDEO SECTION */}
       <section id="home" className="relative h-[100vh] w-full flex flex-col justify-end items-center overflow-hidden bg-black">
