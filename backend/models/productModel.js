@@ -35,7 +35,7 @@ const productSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
     shopPrice: {
@@ -57,7 +57,7 @@ const productSchema = new mongoose.Schema(
           size: { type: String, required: true, trim: true },
           // Kept for old documents; controllers normalize label to size on writes.
           label: { type: String },
-          price: { type: Number, required: true, default: 0 },
+          price: { type: Number, required: false, default: 0 },
           available: { type: Boolean, default: true },
         }
       ],

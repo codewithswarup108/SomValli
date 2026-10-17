@@ -206,7 +206,6 @@ const OrderManager: React.FC = () => {
                     <th className="p-4">Order ID</th>
                     <th className="p-4">Customer</th>
                     <th className="p-4">Items</th>
-                    <th className="p-4">Total</th>
                     <th className="p-4">Status</th>
                     <th className="p-4">Date</th>
                     <th className="p-4 text-center">Actions</th>
@@ -226,20 +225,6 @@ const OrderManager: React.FC = () => {
                         <span className="bg-gray-100 px-2.5 py-1 rounded-lg text-xs font-semibold text-gray-700">
                           {order.orderItems.reduce((acc, item) => acc + item.qty, 0)} items
                         </span>
-                      </td>
-                      <td className="p-4">
-                        <p className="font-black text-accent text-sm">₹{order.totalPrice.toFixed(2)}</p>
-                        <p className="text-[11px] text-gray-500 font-bold mt-0.5">
-                          {order.paymentMethod || 'WhatsApp/COD'}{' '}
-                          {order.isPaid ? (
-                            <span className="bg-green-100 text-green-800 text-[10px] px-1.5 py-0.5 rounded-md font-bold">PAID ✓</span>
-                          ) : (
-                            <span className="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded-md font-bold">COD / UNPAID</span>
-                          )}
-                        </p>
-                        {order.transactionId ? (
-                          <p className="text-[10px] text-gray-400 font-mono">Txn: {order.transactionId}</p>
-                        ) : null}
                       </td>
                       <td className="p-4">
                         <select
@@ -363,22 +348,13 @@ const OrderManager: React.FC = () => {
                           />
                           <div className="flex-1">
                             <h4 className="font-bold text-primary text-sm">{item.name}</h4>
-                            <p className="text-xs text-gray-500">Unit Price: ₹{item.price.toFixed(2)}</p>
-                          </div>
-                          <div className="text-right">
-                            <p className="text-xs text-gray-500 font-bold">{item.selectedSize || item.variant || 'Standard pack'} × {item.qty}</p>
-                            <p className="font-black text-accent text-sm">₹{(item.price * item.qty).toFixed(2)}</p>
+                            <p className="text-xs text-gray-500">Qty: {item.qty}</p>
                           </div>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  {/* Total Summary */}
-                  <div className="border-t border-gray-200 pt-4 flex justify-between items-center font-bold text-lg">
-                    <span className="text-primary">Total Sales Value</span>
-                    <span className="text-accent text-2xl font-black">₹{selectedOrder.totalPrice.toFixed(2)}</span>
-                  </div>
                 </div>
               </motion.div>
             </div>

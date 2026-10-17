@@ -4,8 +4,6 @@ import { FiX, FiSend } from 'react-icons/fi';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
-import VariantSelector from './VariantSelector';
-import { getAvailableProductVariants } from '../../constants/packSizes';
 import { BASE_API_URL } from '../../utils/api';
 
 const getLocalPhoneNumber = (phone?: string) => {
@@ -122,17 +120,11 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
       message += `Phone: +91${formData.phone}\n`;
       message += `Email: ${formData.email || 'N/A'}\n`;
       message += `Delivery Address: ${formData.address}\n\n`;
-      message += `PRODUCTS\n`;
+      message += `PRODUCTS ORDERED\n`;
       cartItems.forEach((item, index) => {
-        message += `${index + 1}. ${item.name}\n`;
-        message += `Pack Size: ${item.variant || 'Standard pack'}\n`;
-        message += `Price: ₹${item.price.toFixed(2)}\n`;
-        message += `Quantity: ${item.qty}\n`;
-        message += `Subtotal: ₹${(item.price * item.qty).toFixed(2)}\n\n`;
+        message += `${index + 1}. ${item.name} (Qty: ${item.qty})\n`;
       });
-      message += `--------------------------------\n`;
-      message += `Grand Total: ₹${cartTotal.toFixed(2)}\n\n`;
-      message += `Thank you.\nSomValli Foods.`;
+      message += `\nThank you.\nSomValli Foods.`;
 
       const whatsappUrl = `https://api.whatsapp.com/send?phone=916307048821&text=${encodeURIComponent(message)}`;
 
@@ -251,26 +243,12 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
                 {/* Order Summary Box */}
                 <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2">
                   <div className="flex justify-between items-center font-bold text-primary border-b border-gray-200 pb-2">
-                    <span>Total Payable ({cartItems.length} items)</span>
-                    <span className="text-accent font-black text-lg">₹{cartTotal.toFixed(2)}</span>
+                    <span>Your Order ({cartItems.length} item{cartItems.length !== 1 ? 's' : ''})</span>
                   </div>
                   <div className="max-h-24 overflow-y-auto space-y-1 text-xs text-gray-600 pr-1">
                     {cartItems.map((item, idx) => (
-                      <div key={idx} className="space-y-2 border-b border-gray-100 pb-2 last:border-0">
-                        <div className="flex justify-between gap-3">
-                          <span>{item.name} × {item.qty} pack{item.qty === 1 ? '' : 's'} <span className="text-gray-400">({item.variant || 'Standard pack'})</span></span>
-                          <motion.span key={`${String(item._id || item.id)}-${item.price}`} initial={{ opacity: 0.3 }} animate={{ opacity: 1 }} className="font-semibold text-primary">₹{(item.price * item.qty).toFixed(2)}</motion.span>
-                        </div>
-                        {item.productVariants && (
-                          <VariantSelector
-                            variants={getAvailableProductVariants({ variants: item.productVariants })}
-                            selectedVariant={item.variant}
-                            onVariantChange={size => {
-                              const next = item.productVariants?.find((variant: any) => (variant.size || variant.label) === size);
-                              if (next) updateVariant(String(item._id || item.id), { size, price: Number(next.price) });
-                            }}
-                          />
-                        )}
+                      <div key={idx} className="flex justify-between gap-3 border-b border-gray-100 pb-1 last:border-0">
+                        <span>{item.name} × {item.qty}</span>
                       </div>
                     ))}
                   </div>

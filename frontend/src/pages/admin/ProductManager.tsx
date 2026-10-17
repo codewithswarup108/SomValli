@@ -163,13 +163,16 @@ const ProductManager: React.FC = () => {
     const finalCategory = formData.category === 'Other' ? formData.customCategory.trim() : formData.category;
 
     const enabledVariants = formData.variants.filter(variant => variant.available);
-    if (!formData.name.trim() || !formData.image.trim() || !finalCategory || enabledVariants.length === 0) {
-      toast.error('Please complete the product details and enable at least one priced pack size.');
+    if (!formData.name.trim() || !formData.image.trim() || !finalCategory) {
+      toast.error('Please fill in product name, image, and category.');
       return;
     }
-
-    if (enabledVariants.some(variant => variant.price === '' || Number(variant.price) < 0 || !Number.isFinite(Number(variant.price)))) {
-      toast.error('Every enabled pack size must have a non-negative price.');
+    // Price is optional — admin can add products without a price (shows as "Price TBD" in catalog)
+    if (
+      enabledVariants.length > 0 &&
+      enabledVariants.some(variant => variant.price !== '' && (Number(variant.price) < 0 || !Number.isFinite(Number(variant.price))))
+    ) {
+      toast.error('Pack size prices must be non-negative numbers.');
       return;
     }
 
@@ -187,7 +190,7 @@ const ProductManager: React.FC = () => {
 
     setSubmitting(true);
     try {
-      const numPrice = Number(enabledVariants[0].price);
+      const numPrice = enabledVariants.length > 0 ? Number(enabledVariants[0].price) || 0 : 0;
       const payload = {
         name: formData.name.trim(),
         price: numPrice,
@@ -197,7 +200,7 @@ const ProductManager: React.FC = () => {
         image: formData.image.trim(),
         category: finalCategory,
         countInStock: Number(formData.countInStock) || 0,
-        variants: formData.variants.map((v: any) => ({ size: v.size, price: v.available ? Number(v.price) : 0, available: !!v.available })),
+        variants: formData.variants.map((v: any) => ({ size: v.size, price: v.available ? (Number(v.price) || 0) : 0, available: !!v.available })),
       };
 
       const url = modalMode === 'edit' && editingProduct 
@@ -337,7 +340,6 @@ const ProductManager: React.FC = () => {
                   <tr className="bg-gray-50 border-b border-gray-200 text-xs font-bold uppercase tracking-wider text-gray-500">
                     <th className="p-4">Product</th>
                     <th className="p-4">Category</th>
-                    <th className="p-4">Catalog Price</th>
                     <th className="p-4">Stock</th>
                     <th className="p-4 text-center">Actions</th>
                   </tr>
@@ -363,12 +365,7 @@ const ProductManager: React.FC = () => {
                         </span>
                       </td>
 
-                      <td className="p-4">
-                        <span className="font-black text-accent text-base block">{product.variants?.filter(variant => variant.available).map(variant => `${variant.size}: ₹${variant.price}`).join(' | ') || `₹${product.price.toFixed(2)}`}</span>
-                        {product.retailPrice && (
-                          <span className="text-[11px] text-gray-400 font-semibold block">Retail: ₹{product.retailPrice}</span>
-                        )}
-                      </td>
+
 
                       <td className="p-4">
                         {product.countInStock > 0 ? (
@@ -387,9 +384,9 @@ const ProductManager: React.FC = () => {
                           <button
                             onClick={() => openEditModal(product)}
                             className="p-2.5 bg-amber-50 text-amber-900 border border-amber-300 hover:bg-amber-100 rounded-xl transition-all font-bold text-xs flex items-center gap-1.5"
-                            title="Edit product details and pack prices"
+                            title="Edit product details"
                           >
-                            <FiEdit2 size={15} /> Edit Price
+                            <FiEdit2 size={15} /> Edit
                           </button>
                           <button
                             onClick={() => handleDeleteProduct(product._id, product.name)}
@@ -468,7 +465,7 @@ const ProductManager: React.FC = () => {
                           type="number"
                           min="0"
                           step="0.01"
-                          placeholder={v.available ? 'Price required' : 'Disabled'}
+                          placeholder={v.available ? 'Price (0 = TBD)' : 'Disabled'}
                           value={v.price}
                           disabled={!v.available}
                           onChange={e => setFormData(prev => ({ ...prev, variants: prev.variants.map((it: any, i: number) => i === idx ? { ...it, price: e.target.value } : it) }))}

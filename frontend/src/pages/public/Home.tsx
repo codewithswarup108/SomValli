@@ -302,17 +302,8 @@ const Home = () => {
                 </div>
                 <div className="p-6 relative bg-white flex-1 flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] uppercase font-bold tracking-widest bg-amber-50 text-amber-800 px-2.5 py-1 rounded-md mb-2 inline-block">
-                      {item.category}
-                    </span>
-                    <h3 className="text-2xl font-playfair font-black mb-2 text-primary">{item.name}</h3>
-                    <p className="text-gray-600 font-poppins text-xs mb-4 line-clamp-3">{item.description}</p>
-
-                    {/* Pack Sizes */}
-                    <div className="bg-gray-50 p-2.5 rounded-xl border border-gray-200 mb-6 flex items-center justify-between text-xs">
-                      <span className="font-bold text-gray-500">Pack Sizes:</span>
-                      <span className="font-bold text-accent">{getAvailableProductVariants(item).map(variant => variant.size).join(' | ')}</span>
-                    </div>
+                    <h3 className="text-2xl font-playfair font-black mb-3 text-primary">{item.name}</h3>
+                    <p className="text-gray-600 font-poppins text-sm mb-6 line-clamp-4">{item.description}</p>
                   </div>
 
                   <button

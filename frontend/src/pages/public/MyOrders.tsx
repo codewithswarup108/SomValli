@@ -264,11 +264,10 @@ const MyOrders: React.FC = () => {
                         />
                         <div className="flex-1">
                           <h5 className="font-bold text-primary text-base font-playfair">{item.name}</h5>
-                          <p className="text-xs text-gray-500">₹{item.price.toFixed(2)} per {item.selectedSize || item.variant || 'pack'}</p>
+                          <p className="text-xs text-gray-500">Qty: {item.qty}</p>
                         </div>
                         <div className="text-right">
-                          <span className="text-xs font-bold text-gray-500">{item.selectedSize || item.variant || 'Standard pack'} × {item.qty}</span>
-                          <p className="font-black text-accent text-base">₹{(item.price * item.qty).toFixed(2)}</p>
+                          <span className="text-xs font-bold text-gray-500">{item.selectedSize || item.variant || 'Standard'}</span>
                         </div>
                       </div>
                     ))}
@@ -296,10 +295,6 @@ const MyOrders: React.FC = () => {
                         <strong>Txn ID:</strong> {order.transactionId}
                       </p>
                     )}
-                  </div>
-                  <div className="text-right w-full sm:w-auto">
-                    <span className="text-xs text-gray-400 font-bold uppercase">Total Cost</span>
-                    <p className="text-2xl font-black text-accent">₹{order.totalPrice.toFixed(2)}</p>
                   </div>
                 </div>
               </motion.div>

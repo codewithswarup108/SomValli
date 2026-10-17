@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/admin/Sidebar';
 import { 
-  FiShoppingBag, FiDollarSign, FiClock, FiArrowRight,
+  FiShoppingBag, FiClock, FiArrowRight,
   FiPackage, FiPlus, FiEdit2, FiExternalLink, FiXCircle, FiGrid
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
@@ -54,7 +54,6 @@ const DashboardOverview: React.FC = () => {
   }, [apiBase]);
 
   const totalOrders = orders.length;
-  const totalRevenue = orders.filter(o => o.status !== 'Cancelled').reduce((acc, curr) => acc + (curr.totalPrice || 0), 0);
   const pendingOrders = orders.filter(o => o.status === 'Pending' || o.status === 'Processing').length;
   const cancelledOrders = orders.filter(o => o.status === 'Cancelled');
 
@@ -153,19 +152,7 @@ const DashboardOverview: React.FC = () => {
         </div>
 
         {/* Metric Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          {/* Sales Revenue */}
-          <div className="bg-[#1F1412] p-6 rounded-2xl border border-accent/30 shadow-xl flex items-center gap-4 hover:border-accent transition-all">
-            <div className="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-2xl flex items-center justify-center text-2xl font-bold border border-emerald-500/40">
-              <FiDollarSign />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-cream/50 uppercase tracking-wider">Total Sales Revenue</p>
-              <h3 className="text-2xl font-black text-emerald-400 mt-1">
-                {loading ? '...' : `₹${totalRevenue.toFixed(2)}`}
-              </h3>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
 
           {/* Total Orders */}
           <div className="bg-[#1F1412] p-6 rounded-2xl border border-accent/30 shadow-xl flex items-center gap-4 hover:border-accent transition-all">
@@ -229,25 +216,21 @@ const DashboardOverview: React.FC = () => {
                     key={order._id}
                     className="bg-[#2A1C19] p-4 rounded-2xl border border-white/5 flex items-center justify-between gap-4 hover:border-accent/40 transition-colors"
                   >
-                    <div>
+                    <div className="flex-1">
                       <span className="text-xs font-mono font-bold text-accent">
                         #{order._id.slice(-6).toUpperCase()}
                       </span>
                       <h4 className="font-bold text-cream text-sm">{order.customerName}</h4>
                       <p className="text-xs text-cream/50">📞 {order.customerPhone}</p>
                       <p className="text-xs text-cream/60 mt-1">
-                        {order.orderItems.map(item => `${item.name} (${item.selectedSize || item.variant || 'Standard pack'} × ${item.qty})`).join(', ')}
+                        {order.orderItems.map(item => item.name).join(', ')}
                       </p>
                     </div>
-
-                    <div className="text-right">
-                      <p className="font-black text-accent text-base">₹{order.totalPrice.toFixed(2)}</p>
-                      <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full inline-block mt-1 ${
-                        order.status === 'Cancelled' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-300'
-                      }`}>
-                        {order.status}
-                      </span>
-                    </div>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full shrink-0 ${
+                      order.status === 'Cancelled' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-300'
+                    }`}>
+                      {order.status}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -258,8 +241,8 @@ const DashboardOverview: React.FC = () => {
           <div className="bg-[#1F1412] p-6 rounded-3xl border border-accent/20 shadow-xl">
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h2 className="text-xl font-playfair font-bold text-accent">Products Catalog & Prices</h2>
-                <p className="text-xs text-cream/60 mt-0.5">Modify prices, delete, or add items</p>
+                <h2 className="text-xl font-playfair font-bold text-accent">Products Catalog</h2>
+                <p className="text-xs text-cream/60 mt-0.5">View, add or remove items</p>
               </div>
               <Link
                 to="/admin/products"
@@ -290,10 +273,6 @@ const DashboardOverview: React.FC = () => {
                       <span className="text-[10px] text-accent/80 font-bold bg-accent/10 px-2 py-0.5 rounded-md">
                         {product.category}
                       </span>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-black text-accent text-base">₹{product.price.toFixed(2)}</p>
-                      <span className="text-[10px] text-cream/50">Stock: {product.countInStock}</span>
                     </div>
                   </div>
                 ))}

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { getAvailableProductVariants } from '../../constants/packSizes';
 import { apiUrl } from '../../utils/api';
 
+
 const Products: React.FC = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,16 +18,24 @@ const Products: React.FC = () => {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   useEffect(() => {
-    fetch(apiUrl('/api/products'), { credentials: 'include' })
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) setProducts(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
+    const loadProducts = () => {
+      fetch(apiUrl('/api/products'), { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) setProducts(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error(err);
+          setLoading(false);
+        });
+    };
+
+    loadProducts();
+
+    // Auto-refresh catalog every 60 seconds so newly added/updated products appear
+    const interval = setInterval(loadProducts, 60_000);
+    return () => clearInterval(interval);
   }, []);
 
   const categories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
@@ -131,24 +140,8 @@ const Products: React.FC = () => {
 
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-900 px-2.5 py-1 rounded-md mb-2 inline-block border border-amber-200">
-                      {item.category}
-                    </span>
-                    <h3 className="text-2xl font-playfair font-black text-primary mb-2">{item.name}</h3>
-                    <p className="text-xs text-gray-500 font-bold mb-2">{Number(item.countInStock) > 0 ? `In stock: ${item.countInStock} pack${item.countInStock > 1 ? 's' : ''}` : 'Out of stock'}</p>
-                    <p className="text-gray-600 text-xs mb-4 line-clamp-3 leading-relaxed">{item.description}</p>
-                    
-                    {/* Dual Pricing & Pack Sizes Box */}
-                    <div className="bg-amber-50/60 p-3 rounded-xl border border-amber-200/60 mb-6 space-y-1.5 text-xs">
-                      <div className="flex justify-between items-center font-bold">
-                        <span className="text-gray-500">Prices shown per selected pack</span>
-                        <span className="text-accent font-black">From ₹{getAvailableProductVariants(item)[0]?.price || item.price}</span>
-                      </div>
-                      <div className="flex justify-between items-center text-[11px] pt-1 border-t border-amber-200/40">
-                        <span className="font-bold text-gray-500">Pack sizes:</span>
-                        <span className="font-black text-primary">{getAvailableProductVariants(item).map(variant => variant.size).join(' | ')}</span>
-                      </div>
-                    </div>
+                    <h3 className="text-2xl font-playfair font-black text-primary mb-3">{item.name}</h3>
+                    <p className="text-gray-600 text-sm mb-6 line-clamp-4 leading-relaxed">{item.description}</p>
                   </div>
 
                   <div className="flex gap-3">

@@ -54,8 +54,8 @@ const createProduct = async (req, res) => {
   try {
     const { name, price, shopPrice, retailPrice, description, image, category, countInStock, packSizes, variants } = req.body;
 
-    if (!name || price === undefined || !description || !image || !category) {
-      return res.status(400).json({ message: 'Please provide all required product details' });
+    if (!name || !description || !image || !category) {
+      return res.status(400).json({ message: 'Please provide name, description, image, and category.' });
     }
 
     const numPrice = Number(price);
@@ -76,7 +76,7 @@ const createProduct = async (req, res) => {
     res.status(201).json(serializeProduct(createdProduct));
   } catch (error) {
     console.error('Error creating product:', error);
-    const isValidationError = /Invalid pack size|Duplicate pack size|price is required/i.test(error.message || '');
+    const isValidationError = /Invalid pack size|Duplicate pack size/i.test(error.message || '');
     res.status(isValidationError ? 400 : 500).json({ message: error.message || 'Failed to create product' });
   }
 };
