@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import CheckoutModal from './CheckoutModal';
 
 const CartDrawer: React.FC = () => {
-  const { isCartOpen, setIsCartOpen, cartItems, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const { isCartOpen, setIsCartOpen, cartItems, removeFromCart, updateQuantity } = useCart();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);

@@ -17,7 +17,7 @@ type CheckoutModalProps = {
 };
 
 const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
-  const { cartItems, cartTotal, clearCart, setIsCartOpen, updateVariant } = useCart();
+  const { cartItems, cartTotal, clearCart, setIsCartOpen } = useCart();
   const { user } = useAuth();
 
   const [loading, setLoading] = useState(false);
